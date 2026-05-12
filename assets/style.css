@@ -35,27 +35,23 @@ body {
     radial-gradient(circle at bottom right, #001100 0%, transparent 35%),
     var(--bg);
 
-  color: var(--text);
+  color: var(--text) !important;
 
   margin: 0;
   line-height: 1.8;
   letter-spacing: 0.04em;
 
-  /* CRT glow */
-  text-shadow: 0 0 4px rgba(51, 255, 102, 0.35);
+  text-shadow: 0 0 6px rgba(51, 255, 102, 0.25);
 
   position: relative;
-
   overflow-x: hidden;
 }
 
-/* CRT scanline overlay */
+/* CRT scanlines */
 body::before {
   content: "";
-
   position: fixed;
   inset: 0;
-
   pointer-events: none;
 
   background:
@@ -68,23 +64,19 @@ body::before {
     );
 
   opacity: 0.45;
-
   z-index: 999;
 }
 
-/* subtle screen flicker */
+/* flicker */
 body::after {
   content: "";
-
   position: fixed;
   inset: 0;
-
   pointer-events: none;
 
   background: rgba(0, 255, 80, 0.015);
 
   animation: flicker 0.15s infinite;
-
   z-index: 998;
 }
 
@@ -104,12 +96,11 @@ body::after {
 /* Cards */
 .card {
   background: var(--card);
-
   border: 1px solid var(--border);
-
   border-radius: 0.35rem;
 
   padding: 2rem;
+  width: 100%;
 
   backdrop-filter: blur(3px);
 
@@ -126,16 +117,13 @@ body::after {
   position: relative;
 }
 
-/* Retro corner accents */
+/* corner accents */
 .card::before,
 .card::after {
   content: "";
-
   position: absolute;
-
   width: 14px;
   height: 14px;
-
   border-color: var(--accent);
   border-style: solid;
 }
@@ -143,20 +131,17 @@ body::after {
 .card::before {
   top: 8px;
   left: 8px;
-
   border-width: 2px 0 0 2px;
 }
 
 .card::after {
   bottom: 8px;
   right: 8px;
-
   border-width: 0 2px 2px 0;
 }
 
 .card:hover {
   transform: translateY(-2px);
-
   border-color: rgba(51, 255, 102, 0.45);
 
   box-shadow:
@@ -165,19 +150,13 @@ body::after {
 }
 
 /* Typography */
-h1,
-h2,
-h3 {
-  font-family:
-    "Courier New",
-    monospace;
-
+h1, h2, h3 {
+  font-family: "Courier New", monospace;
   text-transform: uppercase;
 
-  color: var(--heading);
+  color: var(--heading) !important;
 
-  text-shadow:
-    0 0 8px rgba(51,255,102,0.35);
+  text-shadow: 0 0 8px rgba(51,255,102,0.35);
 }
 
 h1 {
@@ -202,6 +181,10 @@ p {
   max-width: 70ch;
 }
 
+.card p {
+  max-width: none;
+}
+
 /* Navigation */
 .nav {
   display: flex;
@@ -213,10 +196,7 @@ p {
   color: var(--muted);
   text-decoration: none;
   position: relative;
-
-  transition:
-    color 0.2s ease,
-    text-shadow 0.2s ease;
+  transition: color 0.2s ease, text-shadow 0.2s ease;
 }
 
 .nav a::before {
@@ -234,12 +214,10 @@ p {
   position: absolute;
   left: 0;
   bottom: -4px;
-
   width: 0%;
   height: 1px;
 
   background: var(--accent);
-
   box-shadow: 0 0 8px var(--accent);
 
   transition: width 0.25s ease;
@@ -247,7 +225,6 @@ p {
 
 .nav a:hover {
   color: var(--heading);
-
   text-shadow: 0 0 6px rgba(51,255,102,0.5);
 }
 
@@ -272,7 +249,6 @@ p {
 /* Images */
 img {
   border-radius: 0.35rem;
-
   border: 1px solid rgba(51,255,102,0.2);
 
   filter:
@@ -280,8 +256,7 @@ img {
     saturate(0.8)
     brightness(0.95);
 
-  box-shadow:
-    0 0 16px rgba(51,255,102,0.12);
+  box-shadow: 0 0 16px rgba(51,255,102,0.12);
 }
 
 /* Links */
@@ -293,7 +268,7 @@ a:hover {
   opacity: 0.95;
 }
 
-/* Retro text selection */
+/* Selection */
 ::selection {
   background: #33ff66;
   color: #001100;
@@ -305,7 +280,6 @@ a:hover {
   column-gap: 1.5rem;
 }
 
-/* Prevent cards breaking across columns */
 .masonry-grid .card {
   display: inline-block;
   width: 100%;
@@ -316,27 +290,19 @@ a:hover {
   page-break-inside: avoid;
 }
 
-/* Responsive */
 @media (max-width: 900px) {
   .masonry-grid {
     columns: 1;
   }
 }
 
-/* Allow cards to use full width */
-.card p {
-  max-width: none;
-}
-.card {
-  width: 100%;
-}
+/* ================================
+   VIDEO WRAPPER
+================================ */
 
-/* Retro CRT video wrapper */
 .video-wrapper {
   position: relative;
-
   border-radius: 0.35rem;
-
   overflow: hidden;
 
   border: 1px solid rgba(51,255,102,0.25);
@@ -346,10 +312,8 @@ a:hover {
     inset 0 0 24px rgba(51,255,102,0.08);
 }
 
-/* Green CRT video effect */
 .retro-video {
   display: block;
-
   width: 100%;
 
   filter:
@@ -361,13 +325,10 @@ a:hover {
     contrast(1.35);
 }
 
-/* Scanlines */
 .video-wrapper::before {
   content: "";
-
   position: absolute;
   inset: 0;
-
   pointer-events: none;
 
   background:
@@ -380,35 +341,31 @@ a:hover {
     );
 
   mix-blend-mode: screen;
-
   z-index: 2;
 }
 
-/* CRT glow */
 .video-wrapper::after {
   content: "";
-
   position: absolute;
   inset: 0;
-
   pointer-events: none;
 
-  background:
-    radial-gradient(
-      ellipse at center,
-      transparent 55%,
-      rgba(0,0,0,0.35) 100%
-    );
+  background: radial-gradient(
+    ellipse at center,
+    transparent 55%,
+    rgba(0,0,0,0.35) 100%
+  );
 
   z-index: 3;
 }
 
-/* Retro CRT image wrapper */
+/* ================================
+   IMAGE WRAPPER
+================================ */
+
 .image-wrapper {
   position: relative;
-
   border-radius: 0.35rem;
-
   overflow: hidden;
 
   border: 1px solid rgba(51,255,102,0.25);
@@ -416,14 +373,10 @@ a:hover {
   box-shadow:
     0 0 20px rgba(51,255,102,0.18),
     inset 0 0 24px rgba(51,255,102,0.08);
-
-  margin-top: 0.5rem;
 }
 
-/* CRT image styling */
 .retro-image {
   display: block;
-
   width: 100%;
   height: auto;
 
@@ -436,13 +389,10 @@ a:hover {
     contrast(1.3);
 }
 
-/* Scanlines */
 .image-wrapper::before {
   content: "";
-
   position: absolute;
   inset: 0;
-
   pointer-events: none;
 
   background:
@@ -455,46 +405,39 @@ a:hover {
     );
 
   mix-blend-mode: screen;
-
   z-index: 2;
 }
 
-/* CRT vignette */
 .image-wrapper::after {
   content: "";
-
   position: absolute;
   inset: 0;
-
   pointer-events: none;
 
-  background:
-    radial-gradient(
-      ellipse at center,
-      transparent 55%,
-      rgba(0,0,0,0.35) 100%
-    );
+  background: radial-gradient(
+    ellipse at center,
+    transparent 55%,
+    rgba(0,0,0,0.35) 100%
+  );
 
   z-index: 3;
 }
 
-/* Force global CRT green text (override Tailwind) */
-body {
-  color: var(--text) !important;
-}
+/* ================================
+   FINAL TEXT SYSTEM
+================================ */
 
-/* Ensure all common Tailwind text colours don't override CRT theme */
 .text-zinc-100,
 .text-zinc-200,
-.text-zinc-300,
-.text-zinc-400,
-.text-zinc-500 {
+.text-zinc-300 {
   color: var(--text) !important;
 }
 
-/* Muted text consistency */
-p,
-li,
-span {
+.text-zinc-400,
+.text-zinc-500 {
+  color: var(--muted) !important;
+}
+
+p, li {
   color: var(--muted);
 }
