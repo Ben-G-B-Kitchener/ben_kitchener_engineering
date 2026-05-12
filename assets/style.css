@@ -477,3 +477,24 @@ a:hover {
 
   z-index: 3;
 }
+
+/* Force global CRT green text (override Tailwind) */
+body {
+  color: var(--text) !important;
+}
+
+/* Ensure all common Tailwind text colours don't override CRT theme */
+.text-zinc-100,
+.text-zinc-200,
+.text-zinc-300,
+.text-zinc-400,
+.text-zinc-500 {
+  color: var(--text) !important;
+}
+
+/* Muted text consistency */
+p,
+li,
+span {
+  color: var(--muted);
+}
