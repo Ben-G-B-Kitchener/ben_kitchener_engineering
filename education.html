@@ -1,20 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Education</title>
-<script src="https://cdn.tailwindcss.com"></script>
+
 <link rel="stylesheet" href="assets/style.css"/>
 </head>
-<body class="bg-zinc-950 text-zinc-100">
-<header class="border-b border-zinc-800 sticky top-0 bg-zinc-950/90 backdrop-blur">
-  <div class="section flex justify-between items-center py-4">
+
+<body>
+
+<header class="header">
+  <div class="section header-inner">
+
     <div>
-      <h1 class="text-xl font-bold">Ben Kitchener</h1>
-      <p class="text-xs text-zinc-400">Engineering Portfolio</p>
+      <h1 class="heading">Ben Kitchener</h1>
+      <p class="muted">Engineering Portfolio</p>
     </div>
-    <nav class="nav hidden md:block text-sm">
+
+    <nav class="nav">
       <a href="index.html">Home</a>
       <a href="about.html">About</a>
       <a href="projects.html">Projects</a>
@@ -23,34 +28,59 @@
       <a href="publications.html">Publications</a>
       <a href="contact.html">Contact</a>
     </nav>
+
   </div>
 </header>
 
 <section class="section">
-<h2 class="text-4xl font-bold mb-10">Education</h2>
 
-<div class="grid md:grid-cols-2 gap-6">
-<div class="card">
-<h3 class="font-bold">Qualifications</h3>
-<p class="text-zinc-400"><b>BSc. (Hons) Engineering Physics</b> </p>
-<p class="text-zinc-400"><b><i>Sheffield Hallam University</i>, 1997 </p>
-<p class="text-zinc-400">
-</p>
-<p class="text-zinc-400"><b>PhD in Physical Geography</b> </p>
-<p class="text-zinc-400"><b><i>University of Sheffield</i>, 2020 </p>
-</div>
+<h2 class="heading">Education</h2>
 
-<div class="card">
-<h3 class="font-bold">Courses & Certificates</h3>
-<p class="text-zinc-400"></p>
-</div>
+<div class="edu-grid">
+
+  <!-- QUALIFICATIONS -->
+  <div class="card">
+
+    <h3 class="heading">Qualifications</h3>
+
+    <p class="text">
+      <strong>BSc. (Hons) Engineering Physics</strong>
+    </p>
+
+    <p class="muted">
+      <em>Sheffield Hallam University</em>, 1997
+    </p>
+
+    <br/>
+
+    <p class="text">
+      <strong>PhD in Physical Geography</strong>
+    </p>
+
+    <p class="muted">
+      <em>University of Sheffield</em>, 2020
+    </p>
+
+  </div>
+
+  <!-- COURSES -->
+  <div class="card">
+
+    <h3 class="heading">Courses & Certificates</h3>
+
+    <p class="muted">
+      <!-- intentionally empty for now -->
+    </p>
+
+  </div>
+
 </div>
 
 </section>
 
-<footer class="border-t border-zinc-900 text-center text-zinc-500 text-sm py-10">
-© 2026 Ben G. B. Kitchener
+<footer class="footer">
+© 2026 Ben Kitchener
 </footer>
-<script src="assets/script.js"></script>
+
 </body>
 </html>
