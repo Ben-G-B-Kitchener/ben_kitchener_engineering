@@ -17,7 +17,7 @@
 }
 
 /* ================================
-   RESET
+   BASE
 ================================ */
 
 * {
@@ -39,7 +39,7 @@ body {
 
   color: var(--text);
 
-  line-height: 1.7;
+  line-height: 1.55;
   letter-spacing: 0.03em;
 
   text-shadow: 0 0 6px rgba(51, 255, 102, 0.25);
@@ -56,6 +56,7 @@ body::before {
   position: fixed;
   inset: 0;
   pointer-events: none;
+
   background:
     repeating-linear-gradient(
       to bottom,
@@ -64,6 +65,7 @@ body::before {
       var(--scanline) 3px,
       transparent 4px
     );
+
   opacity: 0.4;
   z-index: 999;
 }
@@ -73,6 +75,7 @@ body::after {
   position: fixed;
   inset: 0;
   pointer-events: none;
+
   background: rgba(0, 255, 80, 0.015);
   animation: flicker 0.15s infinite;
   z-index: 998;
@@ -91,28 +94,11 @@ body::after {
 .section {
   max-width: 1400px;
   margin: auto;
-  padding: 3rem 1.5rem;
-}
-
-/* FLEX HELPERS */
-.flex {
-  display: flex;
-}
-
-.justify-between {
-  justify-content: space-between;
-}
-
-.items-center {
-  align-items: center;
-}
-
-.gap-6 {
-  gap: 1.5rem;
+  padding: 2rem 1.5rem; /* reduced vertical spacing */
 }
 
 /* ================================
-   HEADER (FIXED HEIGHT ISSUE)
+   HEADER (compact + stable)
 ================================ */
 
 .header {
@@ -129,12 +115,11 @@ body::after {
   justify-content: space-between;
   align-items: center;
 
-  padding: 0.75rem 0; /* THIS fixes “too tall header” */
+  padding: 0.6rem 0; /* compact header */
 }
 
-/* reduce name dominance */
 .header h1 {
-  font-size: 1.2rem;
+  font-size: 1.15rem;
   margin: 0;
 }
 
@@ -152,16 +137,18 @@ h1, h2, h3 {
 
 h2 {
   font-size: 2rem;
-  margin-bottom: 1rem;
+  margin-bottom: 0.4rem;
 }
 
 h3 {
-  font-size: 1.2rem;
+  font-size: 1.15rem;
+  margin-bottom: 0.3rem;
 }
 
-/* TEXT */
 p, li, span {
   color: var(--muted);
+  margin: 0.5rem 0;
+  line-height: 1.5;
 }
 
 strong, b {
@@ -173,12 +160,12 @@ strong, b {
 }
 
 /* ================================
-   NAVIGATION (FIXED SPACING + HOVER)
+   NAVIGATION (spaced + stable hover)
 ================================ */
 
 .nav {
   display: flex;
-  gap: 2.2rem; /* FIX: stops hover overlap */
+  gap: 1.8rem; /* prevents hover clash */
   align-items: center;
   flex-wrap: wrap;
 }
@@ -186,13 +173,12 @@ strong, b {
 .nav a {
   position: relative;
   display: inline-block;
-  padding: 4px 0;
+  padding: 3px 0;
   color: var(--muted);
   text-decoration: none;
   transition: color 0.2s ease, text-shadow 0.2s ease;
 }
 
-/* cursor */
 .nav a::before {
   content: "> ";
   position: absolute;
@@ -202,7 +188,6 @@ strong, b {
   transition: opacity 0.2s ease;
 }
 
-/* underline */
 .nav a::after {
   content: "";
   position: absolute;
@@ -229,7 +214,7 @@ strong, b {
 }
 
 /* ================================
-   CARDS
+   CARDS (tighter + consistent spacing system)
 ================================ */
 
 .card {
@@ -237,10 +222,9 @@ strong, b {
   border: 1px solid var(--border);
   border-radius: 0.35rem;
 
-  padding: 1.5rem;
-  margin-bottom: 1.5rem;
-
+  padding: 1.25rem;
   width: 100%;
+
   display: block;
 
   box-shadow:
@@ -250,7 +234,7 @@ strong, b {
   position: relative;
 }
 
-/* corners */
+/* remove margin system → replaced by flex gap */
 .card::before,
 .card::after {
   content: "";
@@ -275,33 +259,31 @@ strong, b {
 }
 
 /* ================================
-   2-COLUMN LAYOUT (FIXED, NO MASONRY BUGS)
+   TWO-COLUMN LAYOUT (FIXED SPACING SYSTEM)
 ================================ */
 
 .masonry-grid {
   display: flex;
-  gap: 2rem;
+  gap: 1.5rem;           /* horizontal spacing */
   align-items: flex-start;
 }
 
 .masonry-grid-column {
   flex: 1;
   min-width: 0;
+
+  display: flex;         /* KEY FIX */
+  flex-direction: column;
+  gap: 1rem;             /* vertical spacing controlled here */
 }
 
-/* IMPORTANT: prevents uneven “bottom gap illusion” */
-.masonry-grid-column .card:last-child {
-  margin-bottom: 0;
-}
-
-@media (max-width: 900px) {
-  .masonry-grid {
-    flex-direction: column;
-  }
+/* IMPORTANT: no margin stacking anymore */
+.card {
+  margin: 0;
 }
 
 /* ================================
-   IMAGES
+   MEDIA
 ================================ */
 
 .card img,
@@ -312,7 +294,10 @@ strong, b {
   border-radius: 0.35rem;
 }
 
-/* CRT IMAGE WRAPPER */
+/* ================================
+   IMAGE / VIDEO WRAPPERS
+================================ */
+
 .image-wrapper,
 .video-wrapper {
   position: relative;
@@ -331,6 +316,19 @@ strong, b {
     contrast(1.3);
 }
 
+.retro-video {
+  width: 100%;
+  display: block;
+
+  filter:
+    grayscale(1)
+    sepia(1)
+    hue-rotate(55deg)
+    saturate(8)
+    brightness(0.7)
+    contrast(1.35);
+}
+
 /* scanlines */
 .image-wrapper::before,
 .video-wrapper::before {
@@ -338,6 +336,7 @@ strong, b {
   position: absolute;
   inset: 0;
   pointer-events: none;
+
   background:
     repeating-linear-gradient(
       to bottom,
@@ -346,23 +345,8 @@ strong, b {
       rgba(140,255,170,0.05) 3px,
       transparent 4px
     );
+
   mix-blend-mode: screen;
-}
-
-/* ================================
-   VIDEO
-================================ */
-
-.retro-video {
-  width: 100%;
-  display: block;
-  filter:
-    grayscale(1)
-    sepia(1)
-    hue-rotate(55deg)
-    saturate(8)
-    brightness(0.7)
-    contrast(1.35);
 }
 
 /* ================================
@@ -389,7 +373,7 @@ a:hover {
 }
 
 /* ================================
-   SAFETY NET
+   SAFETY NET (REMOVE WHITE TEXT BUGS)
 ================================ */
 
 [class*="text-zinc"] {
