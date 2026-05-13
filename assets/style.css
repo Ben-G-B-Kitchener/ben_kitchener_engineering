@@ -227,15 +227,24 @@ strong, b {
 ================================ */
 
 .masonry-grid {
-  column-count: 2;
-  column-gap: 1.5rem;
-  column-fill: balance;
+  display: flex;
+  gap: 1.5rem;
+  align-items: flex-start;
 }
 
-@media (max-width: 900px) {
-  .masonry-grid {
-    column-count: 1;
-  }
+/* two vertical stacks */
+.masonry-grid::before,
+.masonry-grid::after {
+  content: "";
+  flex: 1;
+}
+
+/* each column */
+.masonry-grid-column {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
 }
 
 /* ================================
