@@ -314,23 +314,90 @@ strong, b {
   mix-blend-mode: screen;
 }
 
-/* ================================
-   NAV
-================================ */
-
-.nav {
-  display: flex;
-  gap: 1.5rem;
-}
+/* =========================
+   TERMINAL NAV SYSTEM v2
+========================= */
 
 .nav a {
-  color: var(--muted);
-  text-decoration: none;
+  position: relative;
+  display: inline-block;
+  padding: 2px 0;
+  transition: color 0.2s ease, text-shadow 0.2s ease;
 }
 
+/* =========================
+   CURSOR OPTIONS
+========================= */
+
+/* OPTION A: classic ">" cursor */
+.nav a::before {
+  content: "> ";
+  position: absolute;
+  left: -1.2em;
+  opacity: 0;
+  color: var(--accent);
+  transition: opacity 0.2s ease;
+}
+
+/* OPTIONAL OPTION B: blinking block cursor (uncomment to use instead)
+.nav a::before {
+  content: "█ ";
+  position: absolute;
+  left: -1.2em;
+  opacity: 0;
+  color: var(--accent);
+  animation: blink 1s step-end infinite;
+}
+*/
+
+@keyframes blink {
+  50% { opacity: 0; }
+}
+
+/* underline sweep */
+.nav a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 0%;
+  height: 1px;
+
+  background: var(--accent);
+  box-shadow: 0 0 8px var(--accent);
+
+  transition: width 0.25s ease;
+}
+
+/* hover state */
 .nav a:hover {
   color: var(--heading);
   text-shadow: 0 0 6px rgba(51,255,102,0.5);
+}
+
+.nav a:hover::before {
+  opacity: 1;
+}
+
+.nav a:hover::after {
+  width: 100%;
+}
+
+/* =========================
+   ACTIVE PAGE STATE
+========================= */
+
+.nav a.active {
+  color: var(--heading);
+  text-shadow: 0 0 6px rgba(51,255,102,0.5);
+}
+
+.nav a.active::before {
+  opacity: 1;
+}
+
+.nav a.active::after {
+  width: 100%;
 }
 
 /* ================================
