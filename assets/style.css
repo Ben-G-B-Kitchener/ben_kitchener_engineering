@@ -223,28 +223,26 @@ strong, b {
 }
 
 /* ================================
-   MASONRY (REAL FIX)
+   TWO-COLUMN MASONRY FIX
 ================================ */
 
 .masonry-grid {
   display: flex;
-  gap: 1.5rem;
+  gap: 2rem;
   align-items: flex-start;
+  width: 100%;
 }
 
-/* two vertical stacks */
-.masonry-grid::before,
-.masonry-grid::after {
-  content: "";
-  flex: 1;
-}
-
-/* each column */
 .masonry-grid-column {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+/* mobile */
+@media (max-width: 900px) {
+  .masonry-grid {
+    flex-direction: column;
+  }
 }
 
 /* ================================
