@@ -1,76 +1,111 @@
-<div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Home</title>
+<link rel="stylesheet" href="assets/style.css"/>
+</head>
 
-  <!-- HERO -->
-  <section class="section hero" style="padding-bottom: 1.5rem;">
+<body>
 
-    <div class="masonry-grid hero-grid">
+<header class="header">
+  <div class="section header-inner">
 
-      <!-- LEFT COLUMN -->
-      <div>
+    <div>
+      <h1>Ben Kitchener</h1>
+      <p class="muted">Engineering Portfolio</p>
+    </div>
 
-        <p class="muted">
-          Instrumentation • Control Systems • Electronics • Software
-        </p>
+    <nav class="nav">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="projects.html">Projects</a>
+      <a href="experience.html">Experience</a>
+      <a href="education.html">Education</a>
+      <a href="publications.html">Publications</a>
+      <a href="contact.html">Contact</a>
+    </nav>
 
-        <h2 class="heading hero-title">
-          Engineering for Advanced Research Systems
-        </h2>
+  </div>
+</header>
 
-        <p class="text">
-          Senior Electronics Engineer working on fusion technology, cryogenics, and scientific instrumentation.
-        </p>
+<!-- HERO (tight 2-column layout) -->
+<section class="section">
 
-        <p class="muted">
-          <i><b>--- Website under construction ---</b></i>
-        </p>
+  <div style="display:flex; gap:2.5rem; align-items:center; flex-wrap:wrap;">
 
-      </div>
+    <!-- LEFT: TEXT -->
+    <div style="flex:1; min-width:320px;">
 
-      <!-- RIGHT COLUMN -->
-      <div class="card">
+      <p class="muted">
+        Instrumentation • Control Systems • Electronics • Software
+      </p>
+
+      <h2 class="heading hero-title">
+        Engineering for Advanced Research Systems
+      </h2>
+
+      <p class="text">
+        Senior Electronics Engineer working on fusion technology, cryogenics, and scientific instrumentation.
+      </p>
+
+      <p class="muted">
+        <i><b>--- Website under construction ---</b></i>
+      </p>
+
+    </div>
+
+    <!-- RIGHT: IMAGE (smaller card) -->
+    <div style="flex:0 0 280px;">
+      <div class="card" style="padding:1rem;">
         <img src="./assets/ben.jpg" alt="Mugshot">
       </div>
-
     </div>
 
-  </section>
+  </div>
 
+</section>
 
-  <!-- PROFILE + EXPERIENCE -->
-  <section class="section" style="padding-top: 1.5rem;">
+<!-- PROFILE (removed extra vertical spacing between sections) -->
+<section class="section" style="padding-top:1.5rem;">
 
-    <div class="masonry-grid">
+  <div class="card">
 
-      <!-- LEFT -->
-      <div class="card">
+    <h3 class="heading">Profile</h3>
 
-        <h3 class="heading">Profile</h3>
+    <p>
+      Hi! I'm Ben, a Senior Electronics Engineer working for UK Atomic Energy Authority (UKAEA) based at UKAEA South Yorkshire
+      (formerly the Fusion Technology Facility) in Rotherham, providing instrumentation, electronics, software, consultancy, and commissioning
+      support to multiple high-value fusion technology projects. I was Lead C&I Engineer for the ELSA project at UKAEA (SY), which delivered a
+      state-of-the-art cryogenic test facility aimed at supporting the STEP Re-mountable Joints (RMJ) programme, and other cutting-edge fusion research programmes.
+    </p>
 
-        <p>
-          Hi! I'm Ben, a Senior Electronics Engineer working for UK Atomic Energy Authority (UKAEA) based at UKAEA South Yorkshire
-          (formerly the Fusion Technology Facility) in Rotherham, providing instrumentation, electronics, software, consultancy, and commissioning
-          support to multiple high-value fusion technology projects. I was Lead C&I Engineer for the ELSA project at UKAEA (SY), which delivered a
-          state-of-the-art cryogenic test facility aimed at supporting the STEP Re-mountable Joints (RMJ) programme, and other cutting-edge fusion research programmes.
-        </p>
+  </div>
 
-      </div>
+</section>
 
-      <!-- RIGHT -->
-      <div class="card">
+<!-- EXPERIENCE (also tightened spacing) -->
+<section class="section" style="padding-top:1.5rem;">
 
-        <h3 class="heading">Experience</h3>
+  <div class="card">
 
-        <p>
-          Academically strong with research experience in physical sciences and engineering, I have many years mixed industrial R&D experience including low to mid-TRL
-          prototype development and technical support - much of which has been in university research groups and team-supervisory roles. I have worked on projects in
-          sectors including fusion, nuclear (Rolls Royce), particle physics (CERN), aerospace, environmental, and metal casting. I am experienced in the development of
-          hardware and software subsystem components, with excellent writing skills and a well-rounded knowledge of scientific instrumentation.
-        </p>
+    <h3 class="heading">Experience</h3>
 
-      </div>
+    <p>
+      Academically strong with research experience in physical sciences and engineering, I have many years mixed industrial R&D experience including low to mid-TRL
+      prototype development and technical support - much of which has been in university research groups and team-supervisory roles. I have worked on projects in
+      sectors including fusion, nuclear (Rolls Royce), particle physics (CERN), aerospace, environmental, and metal casting. I am experienced in the development of
+      hardware and software subsystem components, with excellent writing skills and a well-rounded knowledge of scientific instrumentation.
+    </p>
 
-    </div>
+  </div>
 
-  </section>
+</section>
 
-</div>
+<footer class="footer">
+  © 2026 Ben G. B. Kitchener
+</footer>
+
+</body>
+</html>
