@@ -374,3 +374,36 @@ a:hover {
 .hero-grid .card {
   height: fit-content;
 }
+
+/* =========================
+   COMPACT HEADER FIX
+========================= */
+
+.compact-header .section {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+.compact-header h1 {
+  font-size: 1.1rem;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.compact-header p {
+  margin: 0;
+  font-size: 0.85rem;
+}
+
+.compact-header .nav {
+  gap: 1rem;
+}
+
+.compact-header .nav a {
+  font-size: 0.9rem;
+}
+
+/* tighten vertical alignment */
+.header-inner {
+  align-items: center;
+}
