@@ -361,14 +361,26 @@ strong, b {
       to bottom,
       transparent 0px,
       transparent 2px,
-      rgba(140,255,170,0.04) 3px,
+      rgba(140,255,170,0.05) 3px,
       transparent 4px
     );
 
-  opacity: 0.6;
-  mix-blend-mode: screen;
+  opacity: 0.55;
+
+  z-index: 3;
 }
 
+.image-wrapper img,
+.video-wrapper iframe,
+.video-wrapper video {
+  position: relative;
+  z-index: 1;
+}
+
+.image-wrapper,
+.video-wrapper {
+  position: relative;
+}
 /* ================================
    CRT VIGNETTE + VIDEO NOISE
 ================================ */
