@@ -32,23 +32,20 @@
 </header>
 
 
-<!-- HERO (NOW CSS CONTROLLED) -->
+<!-- HERO -->
 <section class="section">
 
-  <div class="hero-layout">
+  <div style="display:flex; gap:2.5rem; flex-wrap:wrap; align-items:center;">
 
-    <!-- TEXT -->
-    <div class="hero-text">
+    <div style="flex:1; min-width:320px;">
 
       <p class="muted">
         Instrumentation • Control Systems • Electronics • Software
       </p>
 
-      <h2 class="heading hero-title">
-        Engineering for Advanced Research Systems
-      </h2>
+      <h2>Engineering for Advanced Research Systems</h2>
 
-      <p class="text">
+      <p>
         Senior Electronics Engineer working on fusion technology, superconductor test rigs, and novel scientific instrumentation.
       </p>
 
@@ -58,8 +55,7 @@
 
     </div>
 
-    <!-- IMAGE -->
-    <div class="hero-image">
+    <div style="flex:0 0 400px;">
       <div class="card" style="padding:1rem;">
         <img src="./assets/scope_torus.jpg" alt="Scope Torus">
       </div>
@@ -75,7 +71,7 @@
 
   <div class="card">
 
-    <h3 class="heading">OSCILLOSCOPE</h3>
+    <h3>OSCILLOSCOPE</h3>
 
     <div class="scope-wrapper">
 
@@ -138,7 +134,6 @@
 
 
 <script>
-
 const canvas = document.getElementById("scope");
 const ctx = canvas.getContext("2d");
 
@@ -226,7 +221,6 @@ function updateLabels(){
 
 [freq,amp,time].forEach(el=>el.addEventListener("input", updateLabels));
 updateLabels();
-
 </script>
 
 </body>
