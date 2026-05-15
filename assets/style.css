@@ -20,9 +20,13 @@
    BASE
 ================================ */
 
-* { box-sizing: border-box; }
+* {
+  box-sizing: border-box;
+}
 
-html { scroll-behavior: smooth; }
+html {
+  scroll-behavior: smooth;
+}
 
 body {
   margin: 0;
@@ -130,8 +134,15 @@ h1, h2, h3 {
   margin: 0;
 }
 
-h2 { font-size: 2rem; margin-bottom: 0.4rem; }
-h3 { font-size: 1.15rem; margin-bottom: 0.3rem; }
+h2 {
+  font-size: 2rem;
+  margin-bottom: 0.4rem;
+}
+
+h3 {
+  font-size: 1.15rem;
+  margin-bottom: 0.3rem;
+}
 
 p, li, span {
   color: var(--muted);
@@ -139,12 +150,16 @@ p, li, span {
   line-height: 1.5;
 }
 
-strong, b { color: var(--heading); }
+strong, b {
+  color: var(--heading);
+}
 
-.muted { color: var(--muted); }
+.muted {
+  color: var(--muted);
+}
 
 /* ================================
-   NAV
+   NAVIGATION (FIXED CRT LINKS)
 ================================ */
 
 .nav {
@@ -160,8 +175,19 @@ strong, b { color: var(--heading); }
   padding: 3px 0;
   color: var(--muted);
   text-decoration: none;
+  transition: color 0.2s ease, text-shadow 0.2s ease;
 }
 
+.nav a:visited {
+  color: var(--muted);
+}
+
+.nav a:hover {
+  color: var(--heading);
+  text-shadow: 0 0 6px rgba(51,255,102,0.5);
+}
+
+/* cursor */
 .nav a::before {
   content: "> ";
   position: absolute;
@@ -171,6 +197,11 @@ strong, b { color: var(--heading); }
   transition: opacity 0.2s ease;
 }
 
+.nav a:hover::before {
+  opacity: 1;
+}
+
+/* underline */
 .nav a::after {
   content: "";
   position: absolute;
@@ -183,12 +214,9 @@ strong, b { color: var(--heading); }
   transition: width 0.25s ease;
 }
 
-.nav a:hover {
-  color: var(--heading);
+.nav a:hover::after {
+  width: 100%;
 }
-
-.nav a:hover::before { opacity: 1; }
-.nav a:hover::after { width: 100%; }
 
 /* ================================
    CARDS
@@ -201,6 +229,7 @@ strong, b { color: var(--heading); }
 
   padding: 1.25rem;
   width: 100%;
+
   display: block;
 
   box-shadow:
@@ -210,8 +239,31 @@ strong, b { color: var(--heading); }
   position: relative;
 }
 
+.card::before,
+.card::after {
+  content: "";
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border: 2px solid var(--accent);
+}
+
+.card::before {
+  top: 8px;
+  left: 8px;
+  border-right: none;
+  border-bottom: none;
+}
+
+.card::after {
+  bottom: 8px;
+  right: 8px;
+  border-left: none;
+  border-top: none;
+}
+
 /* ================================
-   GRID
+   TWO COLUMN GRID FIX (STABLE)
 ================================ */
 
 .masonry-grid {
@@ -222,6 +274,8 @@ strong, b { color: var(--heading); }
 
 .masonry-grid-column {
   flex: 1;
+  min-width: 0;
+
   display: flex;
   flex-direction: column;
   gap: 1rem;
@@ -234,42 +288,54 @@ strong, b { color: var(--heading); }
 .card img,
 .image-wrapper img {
   width: 100%;
+  height: auto;
   display: block;
   border-radius: 0.35rem;
 }
 
 /* ================================
-   IMAGE / VIDEO EFFECTS
+   IMAGE + VIDEO WRAPPERS
 ================================ */
 
 .image-wrapper,
 .video-wrapper {
   position: relative;
   overflow: hidden;
+
   border-radius: 0.35rem;
   border: 1px solid rgba(51,255,102,0.22);
+
+  box-shadow:
+    0 0 16px rgba(51,255,102,0.14),
+    inset 0 0 18px rgba(51,255,102,0.05);
 }
 
-/* IMAGE LOOK */
+/* IMAGE FILTER (balanced restored detail) */
 .retro-image {
+  width: 100%;
+  display: block;
+
   filter:
-    grayscale(0.65)
-    sepia(0.45)
+    grayscale(0.55)
+    sepia(0.25)
     hue-rotate(38deg)
-    saturate(2.2)
-    brightness(0.82)
-    contrast(1.18);
+    saturate(1.6)
+    brightness(0.92)
+    contrast(1.12);
 }
 
-/* VIDEO LOOK */
+/* VIDEO FILTER (slightly stronger noise feel) */
 .retro-video {
+  width: 100%;
+  display: block;
+
   filter:
-    grayscale(0.7)
-    sepia(0.5)
-    hue-rotate(42deg)
-    saturate(2.5)
-    brightness(0.78)
-    contrast(1.22);
+    grayscale(0.6)
+    sepia(0.3)
+    hue-rotate(40deg)
+    saturate(1.8)
+    brightness(0.88)
+    contrast(1.18);
 }
 
 /* scanlines */
@@ -285,9 +351,12 @@ strong, b { color: var(--heading); }
       to bottom,
       transparent 0px,
       transparent 2px,
-      rgba(140,255,170,0.05) 3px,
+      rgba(140,255,170,0.04) 3px,
       transparent 4px
     );
+
+  opacity: 0.5;
+  z-index: 3;
 }
 
 /* vignette */
@@ -299,38 +368,57 @@ strong, b { color: var(--heading); }
   pointer-events: none;
 
   background:
-    radial-gradient(ellipse at center,
+    radial-gradient(
+      ellipse at center,
       transparent 58%,
-      rgba(0,0,0,0.24) 100%);
+      rgba(0,0,0,0.22) 100%
+    );
+}
+
+/* video noise */
+.video-wrapper::after {
+  background:
+    radial-gradient(
+      ellipse at center,
+      transparent 58%,
+      rgba(0,0,0,0.22) 100%
+    ),
+    repeating-radial-gradient(
+      circle at center,
+      rgba(255,255,255,0.012) 0px,
+      rgba(255,255,255,0.012) 1px,
+      transparent 2px,
+      transparent 5px
+    );
+
+  animation: videoNoise 0.2s infinite;
+}
+
+@keyframes videoNoise {
+  0% { transform: translate(0px,0px); }
+  50% { transform: translate(0.3px,-0.3px); }
+  100% { transform: translate(0px,0px); }
 }
 
 /* ================================
-   SCOPE FIX (IMPORTANT — REAL FIX)
+   LINKS GLOBAL FIX (NO BLUE/PURPLE EVER)
 ================================ */
 
-/* container controls height ONLY */
-.scope-screen-panel {
-  width: 100%;
-  height: 420px;
+a {
+  color: var(--accent);
+  text-decoration: none;
 }
 
-/* canvas fills container */
-#scope {
-  width: 100%;
-  height: 100%;
-  display: block;
+a:visited {
+  color: var(--accent);
 }
 
-/* mobile correction */
-@media (max-width: 900px) {
+a:active {
+  color: var(--heading);
+}
 
-  .scope-screen-panel {
-    height: 260px;
-  }
-
-  .masonry-grid {
-    flex-direction: column;
-  }
+a:hover {
+  color: var(--heading);
 }
 
 /* ================================
@@ -345,9 +433,48 @@ strong, b { color: var(--heading); }
 }
 
 /* ================================
-   SAFETY NET
+   MOBILE LAYOUT FIXES
 ================================ */
 
-[class*="text-zinc"] {
-  color: var(--muted) !important;
+@media (max-width: 900px) {
+
+  .masonry-grid {
+    flex-direction: column;
+  }
+
+  .header-inner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .nav {
+    gap: 0.8rem;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 600px) {
+  .section {
+    padding: 1.25rem 1rem;
+  }
+
+  .card {
+    padding: 1rem;
+  }
+}
+
+/* ================================
+   LARGE DESKTOP
+================================ */
+
+@media (min-width: 1600px) {
+  .section {
+    max-width: 1600px;
+  }
+
+  body {
+    font-size: 1.05rem;
+  }
 }
