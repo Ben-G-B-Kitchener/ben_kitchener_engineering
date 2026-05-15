@@ -538,3 +538,38 @@ select option {
   height: 420px !important;
   display: block;
 }
+
+/* ================================
+   OSCILLOSCOPE MOBILE FIX (CLEAN STACK)
+================================ */
+
+@media (max-width: 900px) {
+
+  .scope-wrapper {
+    flex-direction: column !important;
+    gap: 1rem;
+  }
+
+  .scope-screen-panel {
+    width: 100%;
+  }
+
+  #scope {
+    height: 240px !important;
+  }
+
+  .scope-controls {
+    width: 100%;
+    max-width: 100%;
+    flex: unset;
+    padding: 0.75rem;
+  }
+
+  .control-group {
+    gap: 0.3rem;
+  }
+
+  input[type="range"] {
+    width: 100%;
+  }
+}
