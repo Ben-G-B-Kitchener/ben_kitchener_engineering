@@ -10,7 +10,7 @@
 <style>
 
 /* ================================
-   OSCILLOSCOPE MODULE ONLY
+   OSCILLOSCOPE MODULE
 ================================ */
 
 .scope-wrapper{
@@ -20,7 +20,6 @@
   flex-wrap:wrap;
 }
 
-/* SCREEN */
 .scope-screen-panel{
   position:relative;
   flex: 1 1 700px;
@@ -38,13 +37,13 @@
   display:block;
 }
 
-/* CONTROLS */
+/* controls */
 .scope-controls{
-  flex: 0 0 260px;
+  flex: 0 0 280px;
 
   display:flex;
   flex-direction:column;
-  gap:1.5rem;
+  gap:1.2rem;
 
   padding:1rem;
   border:1px solid rgba(51,255,102,0.15);
@@ -58,11 +57,16 @@
   gap:0.4rem;
 }
 
-.control-group label{
+label{
   font-size:0.8rem;
   color:#4fbf63;
   text-transform:uppercase;
   letter-spacing:0.08em;
+}
+
+.value{
+  font-size:0.75rem;
+  color:#7dff8a;
 }
 
 input[type="range"]{
@@ -72,7 +76,6 @@ input[type="range"]{
   height:4px;
   background:rgba(51,255,102,0.25);
   border-radius:2px;
-  outline:none;
 }
 
 input[type="range"]::-webkit-slider-thumb{
@@ -84,21 +87,6 @@ input[type="range"]::-webkit-slider-thumb{
   border:1px solid #081408;
   box-shadow:0 0 8px rgba(51,255,102,0.5);
   cursor:pointer;
-  margin-top:-6px;
-}
-
-input[type="range"]::-moz-range-thumb{
-  width:16px;
-  height:16px;
-  border-radius:50%;
-  background:#33ff66;
-  border:1px solid #081408;
-  cursor:pointer;
-}
-
-.value{
-  font-size:0.75rem;
-  color:#7dff8a;
 }
 
 /* mobile */
@@ -140,12 +128,12 @@ input[type="range"]::-moz-range-thumb{
   </div>
 </header>
 
-
 <!-- HERO -->
 <section class="section">
 
   <div style="display:flex; gap:2.5rem; flex-wrap:wrap; align-items:center;">
 
+    <!-- LEFT TEXT -->
     <div style="flex:1; min-width:320px;">
 
       <p class="muted">
@@ -166,23 +154,36 @@ input[type="range"]::-moz-range-thumb{
 
     </div>
 
+    <!-- RIGHT IMAGE (RESTORED) -->
+    <div style="flex:0 0 280px;">
+      <div class="card" style="padding:1rem;">
+        <img src="./assets/scope_torus.jpg" alt="Scope Torus">
+      </div>
+    </div>
+
   </div>
 
 </section>
-
 
 <!-- OSCILLOSCOPE -->
 <section class="section">
 
   <div class="scope-wrapper">
 
-    <!-- SCREEN -->
     <div class="scope-screen-panel">
       <canvas id="scope"></canvas>
     </div>
 
-    <!-- CONTROLS -->
     <div class="scope-controls">
+
+      <div class="control-group">
+        <label>Waveform</label>
+        <select id="wave">
+          <option value="sine">Sine</option>
+          <option value="square">Square</option>
+          <option value="triangle">Triangle</option>
+        </select>
+      </div>
 
       <div class="control-group">
         <label>Frequency (Hz)</label>
@@ -208,15 +209,13 @@ input[type="range"]::-moz-range-thumb{
 
 </section>
 
-
-<!-- FOOTER -->
 <footer class="footer">
   © 2026 Ben G. B. Kitchener
 </footer>
 
-
 <script>
 
+/* scope logic unchanged */
 const canvas = document.getElementById("scope");
 const ctx = canvas.getContext("2d");
 
@@ -230,6 +229,7 @@ resize();
 const freq = document.getElementById("freq");
 const amp = document.getElementById("amp");
 const time = document.getElementById("time");
+const wave = document.getElementById("wave");
 
 const freqVal = document.getElementById("freqVal");
 const ampVal = document.getElementById("ampVal");
@@ -256,6 +256,15 @@ function grid(){
   }
 }
 
+function signal(x,f,t){
+  const base = Math.sin((x * 0.003 * f * t) + phase);
+
+  if(wave.value === "square") return base > 0 ? 1 : -1;
+  if(wave.value === "triangle") return Math.asin(base) / (Math.PI/2);
+
+  return base;
+}
+
 function draw(){
 
   ctx.fillStyle="#000";
@@ -270,11 +279,8 @@ function draw(){
   ctx.beginPath();
 
   for(let x=0;x<canvas.width;x++){
-    const y =
-      canvas.height/2 +
-      Math.sin((x * 0.003 * f * t) + phase) * a;
-
-    x === 0 ? ctx.moveTo(x,y) : ctx.lineTo(x,y);
+    const y = canvas.height/2 + signal(x,f,t) * a;
+    x===0 ? ctx.moveTo(x,y) : ctx.lineTo(x,y);
   }
 
   ctx.strokeStyle="#33ff66";
@@ -288,16 +294,6 @@ function draw(){
 }
 
 draw();
-
-/* labels */
-function updateLabels(){
-  freqVal.textContent = `${freq.value} Hz`;
-  ampVal.textContent = `${amp.value} V/div`;
-  timeVal.textContent = `${time.value} ms/div`;
-}
-
-[freq,amp,time].forEach(el => el.addEventListener("input", updateLabels));
-updateLabels();
 
 </script>
 
