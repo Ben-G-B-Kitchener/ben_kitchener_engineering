@@ -9,125 +9,10 @@
 
 <style>
 
-/* =================================
-   INLINE OSCILLOSCOPE WIDGET STYLE
-================================= */
-
-.scope-shell{
-  background:#061106;
-  border:1px solid rgba(51,255,102,0.25);
-  border-radius:0.35rem;
-  padding:1.5rem;
-
-  box-shadow:
-    inset 0 0 25px rgba(51,255,102,0.06),
-    0 0 25px rgba(51,255,102,0.08);
-}
-
-.scope-grid{
-  display:grid;
-  grid-template-columns: 1fr 260px;
-  gap:2rem;
-  align-items:start;
-}
-
-@media (max-width: 900px){
-  .scope-grid{
-    grid-template-columns:1fr;
-  }
-}
-
-.scope-panel{
-  display:flex;
-  flex-direction:column;
-  gap:1.25rem;
-}
-
+/* optional fallback styling only (you can move to CSS later) */
 .scope-readout{
-  font-size:0.9rem;
-  color:var(--muted);
-  border:1px solid rgba(51,255,102,0.2);
-  padding:0.75rem;
-  background:rgba(0,0,0,0.25);
-}
-
-.scope-controls{
-  display:flex;
-  flex-direction:column;
-  gap:1rem;
-}
-
-.scope-controls label{
-  display:flex;
-  flex-direction:column;
-  gap:0.45rem;
-  color:var(--heading);
-  font-size:0.9rem;
-}
-
-canvas{
-  width:100%;
-  background:#000;
-  border:1px solid rgba(51,255,102,0.2);
-  border-radius:0.35rem;
-  display:block;
-}
-
-/* =========================
-   TERMINAL SLIDERS
-========================= */
-
-input[type="range"]{
-  width:100%;
-  appearance:none;
-  -webkit-appearance:none;
-
-  height:6px;
-
-  background:rgba(51,255,102,0.12);
-  border:1px solid rgba(51,255,102,0.25);
-  border-radius:999px;
-
-  outline:none;
-}
-
-/* chrome */
-
-input[type="range"]::-webkit-slider-thumb{
-  -webkit-appearance:none;
-  appearance:none;
-
-  width:18px;
-  height:18px;
-
-  border-radius:2px;
-
-  background:#33ff66;
-  border:1px solid rgba(255,255,255,0.15);
-
-  cursor:pointer;
-
-  box-shadow:
-    0 0 10px rgba(51,255,102,0.45),
-    0 0 18px rgba(51,255,102,0.25);
-}
-
-/* firefox */
-
-input[type="range"]::-moz-range-thumb{
-  width:18px;
-  height:18px;
-
-  border:none;
-  border-radius:2px;
-
-  background:#33ff66;
-
-  cursor:pointer;
-
-  box-shadow:
-    0 0 10px rgba(51,255,102,0.45),
-    0 0 18px rgba(51,255,102,0.25);
+  margin-top:1rem;
+  font-size:0.85rem;
 }
 
 </style>
@@ -163,7 +48,6 @@ input[type="range"]::-moz-range-thumb{
 
   <div style="display:flex; gap:2.5rem; align-items:center; flex-wrap:wrap;">
 
-    <!-- LEFT -->
     <div style="flex:1; min-width:320px;">
 
       <p class="muted">
@@ -184,8 +68,7 @@ input[type="range"]::-moz-range-thumb{
 
     </div>
 
-    <!-- RIGHT -->
-    <div style="flex:0 0 360px;">
+    <div style="flex:0 0 280px;">
       <div class="card" style="padding:1rem;">
         <img src="./assets/scope_torus.jpg" alt="Scope Torus">
       </div>
@@ -215,7 +98,7 @@ input[type="range"]::-moz-range-thumb{
           <canvas id="scope" width="900" height="420"></canvas>
 
           <div class="scope-readout">
-            SIGNAL GENERATOR ACTIVE • SYNTHETIC TEST WAVEFORM
+            SIGNAL GENERATOR ACTIVE • SYNTHETIC WAVEFORM OUTPUT
           </div>
 
         </div>
@@ -223,27 +106,35 @@ input[type="range"]::-moz-range-thumb{
         <!-- CONTROLS -->
         <div class="scope-controls">
 
-          <label>
-            Frequency
-            <input
-              type="range"
-              id="freq"
-              min="1"
-              max="20"
-              value="5"
-            >
-          </label>
+          <div class="knob-group">
+            <div class="knob-label">FREQUENCY</div>
 
-          <label>
-            Amplitude
-            <input
-              type="range"
-              id="amp"
-              min="10"
-              max="120"
-              value="60"
-            >
-          </label>
+            <input type="range" id="freq" min="1" max="20" value="5" class="knob">
+
+            <div class="knob-readout">
+              <span id="freqReadout">5</span> Hz
+            </div>
+          </div>
+
+          <div class="knob-group">
+            <div class="knob-label">VOLTS / DIV</div>
+
+            <input type="range" id="amp" min="1" max="10" value="5" class="knob">
+
+            <div class="knob-readout">
+              <span id="ampReadout">5</span> V/div
+            </div>
+          </div>
+
+          <div class="knob-group">
+            <div class="knob-label">TIMEBASE</div>
+
+            <input type="range" id="timebase" min="1" max="20" value="10" class="knob">
+
+            <div class="knob-readout">
+              <span id="timeReadout">10</span> ms/div
+            </div>
+          </div>
 
         </div>
 
@@ -267,7 +158,12 @@ const canvas = document.getElementById("scope");
 const ctx = canvas.getContext("2d");
 
 const freqSlider = document.getElementById("freq");
-const ampSlider  = document.getElementById("amp");
+const ampSlider = document.getElementById("amp");
+const timeSlider = document.getElementById("timebase");
+
+const freqReadout = document.getElementById("freqReadout");
+const ampReadout = document.getElementById("ampReadout");
+const timeReadout = document.getElementById("timeReadout");
 
 let phase = 0;
 
@@ -293,10 +189,8 @@ function drawGrid(){
 
 function drawNoise(){
 
-  for(let i=0;i<2500;i++){
-
+  for(let i=0;i<3500;i++){
     ctx.fillStyle = `rgba(51,255,102,${Math.random()*0.03})`;
-
     ctx.fillRect(
       Math.random()*canvas.width,
       Math.random()*canvas.height,
@@ -315,21 +209,23 @@ function draw(){
   drawNoise();
 
   const freq = Number(freqSlider.value);
-  const amp  = Number(ampSlider.value);
+  const amp = Number(ampSlider.value) * 8;
+  const time = Number(timeSlider.value);
+
+  freqReadout.textContent = freq;
+  ampReadout.textContent = ampSlider.value;
+  timeReadout.textContent = time;
 
   ctx.beginPath();
 
-  for(let x=0;x<canvas.width;x++){
+  for(let x=0; x<canvas.width; x++){
 
     const y =
       canvas.height/2 +
-      Math.sin((x*0.01*freq)+phase) * amp;
+      Math.sin((x*0.002*freq*time)+phase) * amp;
 
-    if(x===0){
-      ctx.moveTo(x,y);
-    }else{
-      ctx.lineTo(x,y);
-    }
+    x === 0 ? ctx.moveTo(x,y) : ctx.lineTo(x,y);
+
   }
 
   ctx.strokeStyle = "#33ff66";
@@ -340,7 +236,7 @@ function draw(){
 
   ctx.stroke();
 
-  phase += 0.05;
+  phase += 0.04;
 
   requestAnimationFrame(draw);
 }
