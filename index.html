@@ -4,7 +4,83 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Home</title>
+
 <link rel="stylesheet" href="assets/style.css"/>
+
+<style>
+
+/* =========================
+   OSCILLOSCOPE
+========================= */
+
+.scope-container {
+  margin-top: 1.5rem;
+}
+
+.scope-screen {
+  width: 100%;
+  height: 420px;
+
+  background: #050805;
+
+  border: 1px solid rgba(51,255,102,0.22);
+  border-radius: 0.35rem;
+
+  box-shadow:
+    0 0 16px rgba(51,255,102,0.10),
+    inset 0 0 18px rgba(51,255,102,0.05);
+
+  display: block;
+}
+
+/* controls */
+
+.scope-controls {
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+
+  margin-top: 1.5rem;
+}
+
+.scope-control {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  min-width: 220px;
+}
+
+.scope-control label {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.scope-control input,
+.scope-control select {
+  width: 100%;
+}
+
+.scope-value {
+  color: var(--heading);
+  font-size: 0.9rem;
+}
+
+/* mobile */
+
+@media (max-width: 700px) {
+
+  .scope-screen {
+    height: 300px;
+  }
+
+  .scope-controls {
+    gap: 1rem;
+  }
+}
+
+</style>
+
 </head>
 
 <body>
@@ -18,7 +94,7 @@
     </div>
 
     <nav class="nav">
-      <a href="index.html">Home</a>
+      <a href="index.html"><b>Home</b></a>
       <a href="about.html">About</a>
       <a href="projects.html">Projects</a>
       <a href="experience.html">Experience</a>
@@ -30,12 +106,12 @@
   </div>
 </header>
 
-<!-- HERO (tight 2-column layout) -->
+<!-- HERO -->
 <section class="section">
 
   <div style="display:flex; gap:2.5rem; align-items:center; flex-wrap:wrap;">
 
-    <!-- LEFT: TEXT -->
+    <!-- LEFT -->
     <div style="flex:1; min-width:320px;">
 
       <p class="muted">
@@ -56,10 +132,10 @@
 
     </div>
 
-    <!-- RIGHT: IMAGE (smaller card) -->
+    <!-- RIGHT -->
     <div style="flex:0 0 280px;">
       <div class="card" style="padding:1rem;">
-        <img src="./assets/ben.jpg" alt="Mugshot">
+        <img src="./assets/scope_torus.jpg" alt="Scope Torus">
       </div>
     </div>
 
@@ -67,37 +143,65 @@
 
 </section>
 
-<!-- PROFILE (removed extra vertical spacing between sections) -->
+<!-- OSCILLOSCOPE -->
 <section class="section" style="padding-top:1.5rem;">
 
   <div class="card">
 
-    <h3 class="heading">Profile</h3>
+    <h3 class="heading">OSCILLOSCOPE</h3>
 
-    <p>
-      Hi! I'm Ben, a Senior Electronics Engineer working for UK Atomic Energy Authority (UKAEA) based at UKAEA South Yorkshire
-      (formerly the Fusion Technology Facility) in Rotherham, providing instrumentation, electronics, software, consultancy, and commissioning
-      support to multiple high-value fusion technology projects. I was Lead C&I Engineer for the ELSA project at UKAEA (SY), which delivered a
-      state-of-the-art cryogenic test facility aimed at supporting the STEP Re-mountable Joints (RMJ) programme, and other cutting-edge fusion research programmes.
-    </p>
+    <div class="scope-container">
 
-  </div>
+      <canvas id="scope" class="scope-screen"></canvas>
 
-</section>
+      <!-- CONTROLS -->
+      <div class="scope-controls">
 
-<!-- EXPERIENCE (also tightened spacing) -->
-<section class="section" style="padding-top:1.5rem;">
+        <div class="scope-control">
+          <label>Frequency (Hz)</label>
 
-  <div class="card">
+          <input
+            id="freq"
+            type="range"
+            min="1"
+            max="50"
+            value="5"
+          >
 
-    <h3 class="heading">Experience</h3>
+          <div class="scope-value" id="freqVal">
+            5 Hz
+          </div>
+        </div>
 
-    <p>
-      Academically strong with research experience in physical sciences and engineering, I have many years mixed industrial R&D experience including low to mid-TRL
-      prototype development and technical support - much of which has been in university research groups and team-supervisory roles. I have worked on projects in
-      sectors including fusion, nuclear (Rolls Royce), particle physics (CERN), aerospace, environmental, and metal casting. I am experienced in the development of
-      hardware and software subsystem components, with excellent writing skills and a well-rounded knowledge of scientific instrumentation.
-    </p>
+        <div class="scope-control">
+          <label>Amplitude</label>
+
+          <input
+            id="amp"
+            type="range"
+            min="1"
+            max="100"
+            value="50"
+          >
+
+          <div class="scope-value" id="ampVal">
+            50%
+          </div>
+        </div>
+
+        <div class="scope-control">
+          <label>Waveform</label>
+
+          <select id="waveType">
+            <option value="sine">Sine</option>
+            <option value="square">Square</option>
+            <option value="saw">Sawtooth</option>
+          </select>
+        </div>
+
+      </div>
+
+    </div>
 
   </div>
 
@@ -106,6 +210,136 @@
 <footer class="footer">
   © 2026 Ben G. B. Kitchener
 </footer>
+
+<script>
+
+/* =========================
+   CANVAS SETUP
+========================= */
+
+const canvas = document.getElementById("scope");
+const ctx = canvas.getContext("2d");
+
+function resizeCanvas() {
+  canvas.width = canvas.clientWidth;
+  canvas.height = canvas.clientHeight;
+}
+
+window.addEventListener("resize", resizeCanvas);
+resizeCanvas();
+
+/* =========================
+   CONTROLS
+========================= */
+
+const freqSlider = document.getElementById("freq");
+const ampSlider = document.getElementById("amp");
+const waveType = document.getElementById("waveType");
+
+const freqVal = document.getElementById("freqVal");
+const ampVal = document.getElementById("ampVal");
+
+/* =========================
+   WAVE FUNCTIONS
+========================= */
+
+function waveform(type, x, freq, amp) {
+
+  const t = x * freq;
+
+  if (type === "sine") {
+    return Math.sin(t * Math.PI * 2) * amp;
+  }
+
+  if (type === "square") {
+    return (Math.sin(t * Math.PI * 2) > 0 ? 1 : -1) * amp;
+  }
+
+  if (type === "saw") {
+    return (2 * (t - Math.floor(t + 0.5))) * amp;
+  }
+
+  return 0;
+}
+
+/* =========================
+   GRID
+========================= */
+
+function drawGrid() {
+
+  ctx.strokeStyle = "rgba(51,255,102,0.08)";
+  ctx.lineWidth = 1;
+
+  const spacing = 40;
+
+  for (let x = 0; x < canvas.width; x += spacing) {
+
+    ctx.beginPath();
+    ctx.moveTo(x, 0);
+    ctx.lineTo(x, canvas.height);
+    ctx.stroke();
+  }
+
+  for (let y = 0; y < canvas.height; y += spacing) {
+
+    ctx.beginPath();
+    ctx.moveTo(0, y);
+    ctx.lineTo(canvas.width, y);
+    ctx.stroke();
+  }
+}
+
+/* =========================
+   DRAW LOOP
+========================= */
+
+function draw() {
+
+  const freq = parseFloat(freqSlider.value);
+  const amp = parseFloat(ampSlider.value) / 50;
+  const type = waveType.value;
+
+  freqVal.textContent = freq + " Hz";
+  ampVal.textContent = ampSlider.value + "%";
+
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  drawGrid();
+
+  ctx.strokeStyle = "#33ff66";
+  ctx.lineWidth = 2;
+
+  ctx.shadowBlur = 10;
+  ctx.shadowColor = "rgba(51,255,102,0.5)";
+
+  ctx.beginPath();
+
+  const mid = canvas.height / 2;
+
+  for (let x = 0; x < canvas.width; x++) {
+
+    const normX = x / canvas.width;
+
+    const y =
+      mid -
+      waveform(type, normX * 10, freq, amp) * (canvas.height / 3);
+
+    if (x === 0) {
+      ctx.moveTo(x, y);
+    } else {
+      ctx.lineTo(x, y);
+    }
+  }
+
+  ctx.stroke();
+
+  requestAnimationFrame(draw);
+}
+
+draw();
+
+</script>
 
 </body>
 </html>
