@@ -53,6 +53,14 @@
 
   <url>
     <loc>
+      https://ben-g-b-kitchener.github.io/ben_kitchener_engineering/articles.html
+    </loc>
+    <priority>0.6</priority>
+  </url>
+
+  
+  <url>
+    <loc>
       https://ben-g-b-kitchener.github.io/ben_kitchener_engineering/contact.html
     </loc>
     <priority>0.7</priority>
