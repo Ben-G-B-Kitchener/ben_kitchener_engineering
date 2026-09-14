@@ -240,7 +240,7 @@ draw();
 function updateLabels(){
   freqVal.textContent = `${freq.value} kHz`;
   ampVal.textContent = `${amp.value} V/div`;
-  timeVal.textContent = `${time.value} U+000B5s/div`;
+  timeVal.textContent = `${time.value} \u00B5s/div`;
 }
 
 [freq,amp,time].forEach(el=>el.addEventListener("input", updateLabels));
