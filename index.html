@@ -118,7 +118,7 @@ content="https://ben-g-b-kitchener.github.io/ben_kitchener_engineering/">
 
         <div class="control-group">
           <label>Frequency (kHz)</label>
-          <input id="freq" type="range" min="1" max="50" value="10">
+          <input id="freq" type="range" min="1" max="100" value="1">
           <div class="value-row">
             <span></span>
             <span class="value" id="freqVal"></span>
@@ -136,7 +136,7 @@ content="https://ben-g-b-kitchener.github.io/ben_kitchener_engineering/">
 
         <div class="control-group">
           <label>Timebase (&#181;s/div)</label>
-          <input id="time" type="range" min="1" max="100" value="20">
+          <input id="time" type="range" min="1" max="100" value="100">
           <div class="value-row">
             <span></span>
             <span class="value" id="timeVal"></span>
@@ -199,7 +199,7 @@ function grid(){
 }
 
 function signal(x,f,t){
-  const base = Math.sin((x * 1.000 * f * t) + phase);
+  const base = Math.sin((x * 0.001 * f * t) + phase);
 
   if(wave.value === "square") return base > 0 ? 1 : -1;
   if(wave.value === "triangle") return Math.asin(base) / (Math.PI/2);
