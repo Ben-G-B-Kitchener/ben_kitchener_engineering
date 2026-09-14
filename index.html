@@ -209,7 +209,7 @@ function grid(){
 }
 
 function signal(x,f,t){
-  const base = Math.sin((x * 0.001 * f * t + ox * 0.1)  );
+  const base = Math.sin((x * 0.001 * f * t + ox * 0.001)  );
 
   if(wave.value === "square") return base > 0 ? 1 : -1;
   if(wave.value === "triangle") return Math.asin(base) / (Math.PI/2);
