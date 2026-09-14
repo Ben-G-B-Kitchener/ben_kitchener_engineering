@@ -232,8 +232,8 @@ function draw(){
   ctx.beginPath();
 
   for(let x=0;x<canvas.width;x++){
-    const y = canvas.height/2 + signal(x+ox,f,t) * a;
-    x===0 ? ctx.moveTo(x+ox,y) : ctx.lineTo(x+ox,y);
+    const y = canvas.height/2 + signal(x,f,t+ox) * a;
+    x===0 ? ctx.moveTo(x,y) : ctx.lineTo(x,y);
   }
 
   ctx.strokeStyle="#33ff66";
