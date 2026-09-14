@@ -232,7 +232,7 @@ function draw(){
   ctx.beginPath();
 
   for(let x=0;x<canvas.width;x++){
-    const y = canvas.height/2 + signal(x,f,t) * a;
+    const y = canvas.height/2 + signal(x,f,t+ox*0.001) * a;
     x===0 ? ctx.moveTo(x,y) : ctx.lineTo(x,y);
   }
 
