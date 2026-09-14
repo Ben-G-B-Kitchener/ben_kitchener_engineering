@@ -126,7 +126,7 @@ content="https://ben-g-b-kitchener.github.io/ben_kitchener_engineering/">
         </div>
 
         <div class="control-group">
-          <label>Amplitude (V/div)</label>
+          <label>Amplitude (2V/div)</label>
           <input id="amp" type="range" min="1" max="10" value="4">
           <div class="value-row">
             <span></span>
@@ -191,7 +191,7 @@ let phase = 0;
 
 function grid(){
   ctx.strokeStyle = "rgba(51,255,102,0.08)";
-  const step = 61;
+  const step = 65;
 
   for(let x=0;x<canvas.width;x+=step){
     ctx.beginPath();
@@ -225,7 +225,7 @@ function draw(){
   grid();
 
   const f = Number(freq.value);
-  const a = Number(amp.value) * 20;
+  const a = Number(amp.value) * 10;
   const t = Number(time.value);
   const ox = Number(offx.value);
 
@@ -250,7 +250,7 @@ draw();
 
 function updateLabels(){
   freqVal.textContent = `${freq.value} Hz`;
-  ampVal.textContent = `${amp.value} V/div`;
+  ampVal.textContent = `${amp.value} V`;
   timeVal.textContent = `${time.value} ms/div`;
   offxVal.textContent = `${offx.value} ms`;
 }
