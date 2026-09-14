@@ -209,7 +209,7 @@ function grid(){
 }
 
 function signal(x,f,t){
-  const base = Math.sin((x * 0.001 * f * t) );
+  const base = Math.sin((x * 0.001 * f * t) + ox);
 
   if(wave.value === "square") return base > 0 ? 1 : -1;
   if(wave.value === "triangle") return Math.asin(base) / (Math.PI/2);
@@ -232,7 +232,7 @@ function draw(){
   ctx.beginPath();
 
   for(let x=0;x<canvas.width;x++){
-    const y = canvas.height/2 + signal(x,f,t+ox) * a;
+    const y = canvas.height/2 + signal(x,f,t) * a;
     x===0 ? ctx.moveTo(x,y) : ctx.lineTo(x,y);
   }
 
