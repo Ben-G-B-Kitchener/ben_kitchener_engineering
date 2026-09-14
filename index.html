@@ -191,7 +191,7 @@ let phase = 0;
 
 function grid(){
   ctx.strokeStyle = "rgba(51,255,102,0.08)";
-  const step = 65;
+  const step = 64;
 
   for(let x=0;x<canvas.width;x+=step){
     ctx.beginPath();
@@ -225,7 +225,7 @@ function draw(){
   grid();
 
   const f = Number(freq.value);
-  const a = Number(amp.value) * 10;
+  const a = Number(amp.value) * 18;
   const t = Number(time.value);
   const ox = Number(offx.value);
 
