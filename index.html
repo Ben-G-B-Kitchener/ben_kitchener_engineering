@@ -242,7 +242,7 @@ function draw(){
   ctx.lineWidth=2;
   ctx.stroke();
 
-  phase += 0.04;
+  phase = 0.01 * ox;
   requestAnimationFrame(draw);
 }
 
