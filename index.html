@@ -117,7 +117,7 @@ content="https://ben-g-b-kitchener.github.io/ben_kitchener_engineering/">
         </div>
 
         <div class="control-group">
-          <label>Frequency (Hz)</label>
+          <label>Frequency (kHz)</label>
           <input id="freq" type="range" min="1" max="50" value="10">
           <div class="value-row">
             <span></span>
@@ -135,8 +135,8 @@ content="https://ben-g-b-kitchener.github.io/ben_kitchener_engineering/">
         </div>
 
         <div class="control-group">
-          <label>Timebase (ms/div)</label>
-          <input id="time" type="range" min="1" max="20" value="8">
+          <label>Timebase (&#181;s/div)</label>
+          <input id="time" type="range" min="2" max="40" value="10">
           <div class="value-row">
             <span></span>
             <span class="value" id="timeVal"></span>
@@ -238,9 +238,9 @@ function draw(){
 draw();
 
 function updateLabels(){
-  freqVal.textContent = `${freq.value} Hz`;
+  freqVal.textContent = `${freq.value} kHz`;
   ampVal.textContent = `${amp.value} V/div`;
-  timeVal.textContent = `${time.value} ms/div`;
+  timeVal.textContent = `${time.value} &#181;s/div`;
 }
 
 [freq,amp,time].forEach(el=>el.addEventListener("input", updateLabels));
