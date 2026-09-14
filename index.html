@@ -143,6 +143,15 @@ content="https://ben-g-b-kitchener.github.io/ben_kitchener_engineering/">
           </div>
         </div>
 
+        <div class="control-group">
+          <label>X-Offset (&#181;s)</label>
+          <input id="offx" type="range" min="-100" max="100" value="0">
+          <div class="value-row">
+            <span></span>
+            <span class="value" id="offxVal"></span>
+          </div>
+        </div>
+        
       </div>
 
     </div>
@@ -176,6 +185,7 @@ const wave = document.getElementById("wave");
 const freqVal = document.getElementById("freqVal");
 const ampVal = document.getElementById("ampVal");
 const timeVal = document.getElementById("timeVal");
+const offxVal = document.getElementById("offxVal");
 
 let phase = 0;
 
@@ -217,12 +227,13 @@ function draw(){
   const f = Number(freq.value);
   const a = Number(amp.value) * 20;
   const t = Number(time.value);
+  const ox = Number(offx.value);
 
   ctx.beginPath();
 
   for(let x=0;x<canvas.width;x++){
-    const y = canvas.height/2 + signal(x,f,t) * a;
-    x===0 ? ctx.moveTo(x,y) : ctx.lineTo(x,y);
+    const y = canvas.height/2 + signal(x+ox,f,t) * a;
+    x===0 ? ctx.moveTo(x+ox,y) : ctx.lineTo(x+ox,y);
   }
 
   ctx.strokeStyle="#33ff66";
@@ -241,9 +252,10 @@ function updateLabels(){
   freqVal.textContent = `${freq.value} Hz`;
   ampVal.textContent = `${amp.value} V/div`;
   timeVal.textContent = `${time.value} ms/div`;
+  offxVal.textContent = `${offx.value} ms`;
 }
 
-[freq,amp,time].forEach(el=>el.addEventListener("input", updateLabels));
+[freq,amp,time,offx].forEach(el=>el.addEventListener("input", updateLabels));
 updateLabels();
 </script>
 
