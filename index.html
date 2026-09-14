@@ -117,7 +117,7 @@ content="https://ben-g-b-kitchener.github.io/ben_kitchener_engineering/">
         </div>
 
         <div class="control-group">
-          <label>Frequency (kHz)</label>
+          <label>Frequency (Hz)</label>
           <input id="freq" type="range" min="1" max="100" value="1">
           <div class="value-row">
             <span></span>
@@ -135,7 +135,7 @@ content="https://ben-g-b-kitchener.github.io/ben_kitchener_engineering/">
         </div>
 
         <div class="control-group">
-          <label>Timebase (&#181;s/div)</label>
+          <label>Timebase (ms/div)</label>
           <input id="time" type="range" min="1" max="100" value="100">
           <div class="value-row">
             <span></span>
@@ -242,7 +242,7 @@ function draw(){
   ctx.lineWidth=2;
   ctx.stroke();
 
-  phase = 0.01 * ox;
+  phase = 0.1 * ox;
   requestAnimationFrame(draw);
 }
 
