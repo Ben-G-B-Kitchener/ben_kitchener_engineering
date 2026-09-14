@@ -127,7 +127,7 @@ content="https://ben-g-b-kitchener.github.io/ben_kitchener_engineering/">
 
         <div class="control-group">
           <label>Amplitude (V/div)</label>
-          <input id="amp" type="range" min="1" max="10" value="4">
+          <input id="amp" type="range" min="1" max="100" value="4">
           <div class="value-row">
             <span></span>
             <span class="value" id="ampVal"></span>
@@ -136,7 +136,7 @@ content="https://ben-g-b-kitchener.github.io/ben_kitchener_engineering/">
 
         <div class="control-group">
           <label>Timebase (&#181;s/div)</label>
-          <input id="time" type="range" min="2" max="40" value="10">
+          <input id="time" type="range" min="1" max="100" value="20">
           <div class="value-row">
             <span></span>
             <span class="value" id="timeVal"></span>
@@ -199,7 +199,7 @@ function grid(){
 }
 
 function signal(x,f,t){
-  const base = Math.sin((x * 0.050 * f * t) + phase);
+  const base = Math.sin((x * 1.000 * f * t) + phase);
 
   if(wave.value === "square") return base > 0 ? 1 : -1;
   if(wave.value === "triangle") return Math.asin(base) / (Math.PI/2);
@@ -214,7 +214,7 @@ function draw(){
 
   grid();
 
-  const f = Number(freq.value);
+  const f = Number(freq.value * 1000);
   const a = Number(amp.value) * 20;
   const t = Number(time.value);
 
@@ -238,9 +238,9 @@ function draw(){
 draw();
 
 function updateLabels(){
-  freqVal.textContent = `${freq.value} kHz`;
+  freqVal.textContent = `${freq.value} Hz`;
   ampVal.textContent = `${amp.value} V/div`;
-  timeVal.textContent = `${time.value} \u00B5s/div`;
+  timeVal.textContent = `${time.value} ms/div`;
 }
 
 [freq,amp,time].forEach(el=>el.addEventListener("input", updateLabels));
