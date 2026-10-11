@@ -6,7 +6,39 @@
     <title>CLARITAS | Ben Kitchener Engineering</title>
     <meta name="description" content="CLARITAS: a GPU accelerated particle size resolved Monte Carlo model for optical transport in sediment laden water.">
     <link rel="stylesheet" href="../assets/style.css">
-    <link rel="stylesheet" href="../assets/claritas.css">
+    <style>
+/* Shared portfolio typography, header, cards and CRT appearance come from style.css.
+   These scoped rules handle scientific content only. */
+.claritas-page .article-section { margin-top:2rem; }
+.claritas-page [id] { scroll-margin-top:10rem; }
+.claritas-page .article-toc { margin:1.5rem 0; padding:1rem; border:1px solid var(--border); background:var(--bg-alt); }
+.claritas-page .article-toc ol { list-style:none; padding:0; columns:2; column-gap:2rem; }
+.claritas-page .article-toc li { break-inside:avoid; }
+.claritas-page .skip-link { position:fixed; top:-100px; left:1rem; padding:.6rem; background:var(--bg-alt); z-index:1000; }
+.claritas-page .skip-link:focus { top:.5rem; }
+.claritas-page a:focus-visible, .claritas-page summary:focus-visible { outline:2px solid var(--accent); outline-offset:4px; }
+.claritas-page .scientific-figure { margin:2rem 0; }
+.claritas-page .figure-panels { display:grid; gap:1rem; }
+.claritas-page .figure-scroll, .claritas-page .table-scroll, .claritas-page .equation-scroll { max-width:100%; min-width:0; overflow-x:auto; }
+.claritas-page .scientific-figure img { display:block; width:100%; height:auto; filter:none!important; }
+.claritas-page .scientific-figure figcaption { color:var(--muted); margin-top:.75rem; line-height:1.5; }
+.claritas-page .scientific-figure .image-wrapper::before, .claritas-page .scientific-figure .image-wrapper::after { display:none; }
+.claritas-page .table-scroll { margin:1.5rem 0; }
+.claritas-page table { border-collapse:collapse; width:100%; min-width:640px; }
+.claritas-page caption { text-align:left; color:var(--heading); padding-bottom:.75rem; }
+.claritas-page th, .claritas-page td { border:1px solid var(--border); padding:.75rem; text-align:left; vertical-align:top; }
+.claritas-page thead th { background:var(--bg-alt); color:var(--heading); }
+.claritas-page tbody tr:nth-child(even) { background:var(--bg-alt); }
+.claritas-page .equation { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:.6rem; align-items:center; margin:1.5rem 0; }
+.claritas-page .equation img { width:auto; max-width:none; height:auto; margin:auto; filter:none!important; }
+.claritas-page .equation-number { color:var(--heading); }
+.claritas-page .equation-source { grid-column:1/-1; }
+.claritas-page summary { cursor:pointer; }
+.claritas-page pre { overflow-x:auto; white-space:pre; padding:.75rem; background:var(--bg-alt); }
+.claritas-page .reference { overflow-wrap:anywhere; }
+@media(max-width:600px) { .claritas-page .article-toc ol { columns:1; } }
+@media(prefers-reduced-motion:reduce) { .claritas-root { scroll-behavior:auto; } .claritas-page *, .claritas-page::before, .claritas-page::after { animation:none!important; transition:none!important; } }
+    </style>
   </head>
   <body class="claritas-page">
     <a class="skip-link" href="#article">Skip to article</a>
@@ -29,8 +61,8 @@
         </nav>
       </div>
     </header>
-    <main class="section claritas-main">
-      <article id="article" class="card claritas-article">
+    <main class="section">
+      <article id="article" class="card">
         <p class="article-links"><a href="../articles.html">← Articles</a> · <a href="turbidity.html">Turbidity article</a></p>
         <h2 class="article-title">CLARITAS</h2>
         <p class="article-subtitle">A GPU Accelerated Particle Size Resolved Monte Carlo Model for Optical Transport in Sediment Laden Water</p>
