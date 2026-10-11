@@ -72,8 +72,8 @@ content="https://ben-g-b-kitchener.github.io/ben_kitchener_engineering/">
       Turbidity Measurement and Suspended Sediment Research
     </h2>
 
-    <p class="muted">
-      Ben G. B. Kitchener
+    <p>
+      <b>Ben G. B. Kitchener</b>
     </p>
 
     <p>
@@ -98,7 +98,7 @@ content="https://ben-g-b-kitchener.github.io/ben_kitchener_engineering/">
       turbidity readings if their particle size distributions, mineralogy, colour, or organic content differ.
     </p>
 
-        <h3>Instrument geometry matters</h3>
+    <h3>Instrument geometry matters</h3>
 
     <p>
       Different turbidity instruments use different optical geometries. Some measure light transmitted through
@@ -108,6 +108,34 @@ content="https://ben-g-b-kitchener.github.io/ben_kitchener_engineering/">
       instrument response.
     </p>
 
+    <p>
+      In my PhD thesis I challenged conventional turbidity units and their use as proxies for suspended sediment concentration. 
+      I developed a research instrument and proposed calibrated, multi-angle light-attenuation measurements reported in decibels,
+      with angle and wavelength explicitly recorded to improve comparisons between instruments. 
+      Through numerical modelling, I identified the importance of beam divergence and the need to combine Mie scattering
+      with geometric optics. I also explored how further modelling could help infer sediment particle size and shape and improve 
+      concentration estimates. Initial modelling of the TARDIIS instrument was developed in LabVIEW. This platform is actually a bad choice for model 
+      development for many reasons, but it was the only tool I had available at the time. I have now developed a GPU-accelerated Monte Carlo model called CLARITAS,
+      which is now available on <a href="https://github.com/Ben-G-B-Kitchener/TARDIIS_and_CLARITAS">GitHub</a>, 
+      and is discussed in detail here: <a href="claritas.html">CLARITAS</a>. The new CLARITAS model (the original is also called CLARITAS, but is thankfully not
+      available for download) attempts to account for the full experiment geometry, including the light source, detector, and sample container, and the water vortex caused by the
+      stirring of the sample. It also includes a more complete treatment of Mie scattering and geometric optics, and models the steady-state distribution of sediment in
+      the water column. There is still room for improvement, and I intend to continue its development in the future. However, in its current form it is a useful tool for understanding
+      the optical response of sediment-laden water and the limitations of turbidity measurement. It can also (with some effort) be adapted to other instrument
+      geometries and sediments. Future revisions will have a more configurable design.
+    </p>
+
+    <h3>CLARITAS Model Output</h3>
+
+    <div class="image-wrapper">
+      <img
+          src="./assets/turbidity/CLARITAS_3D_plots.jpg"
+          alt="CLARITAS 3D Model Output"
+          class="retro-image"
+       />
+    </div>
+
+    
   </div>
 
 </section>
