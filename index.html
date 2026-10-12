@@ -219,11 +219,18 @@ function signal(x,f,t){
 
 function draw(){
 
-  ctx.fillStyle="#000";
-  ctx.fillRect(0,0,canvas.width,canvas.height);
+/* Clear the screen */
+ctx.save();
+ctx.shadowBlur = 0;
+ctx.shadowColor = "transparent";
+ctx.fillStyle = "#000";
+ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-  grid();
-
+/* Draw a sharp grid without waveform glow */
+ctx.lineWidth = 1;
+grid();
+ctx.restore();
+  
   const f = Number(freq.value);
   const a = Number(amp.value) * 18;
   const t = Number(time.value);
@@ -236,12 +243,25 @@ function draw(){
     x===0 ? ctx.moveTo(x,y) : ctx.lineTo(x,y);
   }
 
-  ctx.strokeStyle="#33ff66";
-  ctx.shadowColor="#33ff66";
-  ctx.shadowBlur=8;
-  ctx.lineWidth=2;
-  ctx.stroke();
+/* CRT phosphor bloom: wide, diffuse halo */
+ctx.save();
 
+ctx.strokeStyle = "rgba(51,255,102,0.28)";
+ctx.shadowColor = "#33ff66";
+ctx.shadowBlur = 16;
+ctx.lineWidth = 5;
+ctx.stroke();
+
+/* Sharp, bright phosphor trace */
+ctx.strokeStyle = "#88ffaa";
+ctx.shadowColor = "#33ff66";
+ctx.shadowBlur = 5;
+ctx.lineWidth = 1.5;
+ctx.stroke();
+
+/* Restore canvas rendering state */
+ctx.restore();
+  
   phase = 0.1 * ox;
   requestAnimationFrame(draw);
 }
