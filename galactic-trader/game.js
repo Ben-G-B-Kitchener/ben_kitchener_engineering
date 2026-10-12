@@ -24,7 +24,7 @@
     for(const star of stars)star.prev=null;
   }
   new ResizeObserver(resize).observe(canvas);resize();
-  const controls = new Set(['KeyX','KeyS','Comma','Period','Space','Slash','KeyR']);
+  const controls = new Set(['KeyX','KeyS','ArrowUp','ArrowDown','Comma','Period','Space','Slash','KeyR']);
   addEventListener('keydown',e=>{if(controls.has(e.code)){e.preventDefault();keys.add(e.code);}if(e.code==='KeyR'&&!e.repeat)reset();});
   addEventListener('keyup',e=>keys.delete(e.code));
   addEventListener('blur',()=>keys.clear());
@@ -42,10 +42,20 @@
     return [v[0]*c+q[0]*s+axis[0]*d,v[1]*c+q[1]*s+axis[1]*d,v[2]*c+q[2]*s+axis[2]*d];
   }
   function steer(dp,dr){
-    // Positive pitch raises the nose, positive roll tilts right.
-    // Rotate both vectors around the same instantaneous LOCAL axis.
-    if(dp){up=rotate(up,right,-dp);forward=rotate(forward,right,-dp);}
-    if(dr){right=rotate(right,forward,-dr);up=rotate(up,forward,-dr);}
+    // Local aircraft axes: X=right wing, Y=up, Z=nose.
+    // Positive pitch turns the nose towards +up.  The world consequently
+    // moves DOWN the screen, regardless of the ship's current roll.
+    // Positive roll turns the right wing towards -up.
+    // Apply pitch about the *current* right-wing axis, never the world X/Z.
+    if(dp){
+      forward=rotate(forward,right,-dp);
+      up=rotate(up,right,-dp);
+    }
+    if(dr){
+      right=rotate(right,forward,-dr);
+      up=rotate(up,forward,-dr);
+    }
+    // Re-orthogonalise without modifying the desired forward direction.
     forward=norm(forward);
     right=norm(cross(up,forward));
     up=norm(cross(forward,right));
@@ -120,7 +130,15 @@
     label('CREDITS 100.0',w-pad,h-25,12,'right');
     line(cx-25,cy,cx-9,cy,.8);line(cx+9,cy,cx+25,cy,.8);line(cx,cy-25,cx,cy-9,.8);line(cx,cy+9,cx,cy+25,.8);
     ctx.strokeStyle='#62ff94';ctx.strokeRect(pad,h-113,Math.max(5,pilot.speed)*1.05,5);
-    label('CLASSIC ELITE FLIGHT // NO YAW',cx,h-25,11,'center');
+    // Ship-relative attitude cue: its pitch deflection is vertical on screen.
+    const pitchCue = Math.max(-1,Math.min(1,pilot.pitchRate/1.35));
+    line(cx-6,cy+46,cx+6,cy+46,.3);
+    if(Math.abs(pitchCue)>.025){
+      const dir=pitchCue>0?-1:1;
+      line(cx,cy+45,cx,cy+45+dir*Math.abs(pitchCue)*24,.95,2);
+      label(pitchCue>0?'CLIMB':'DIVE',cx+12,cy+51,10);
+    }
+    label('PITCH: X / S OR UP / DOWN   //   ROLL: , / .',cx,h-25,11,'center');
     label(`ROLL ${((pilot.rollAngle*180/Math.PI)%360).toFixed(0)}°  PITCH ${((pilot.pitchAngle*180/Math.PI)%360).toFixed(0)}°`,cx,48,11,'center');
     ctx.restore();
   }
@@ -129,9 +147,9 @@
     // Period/comma and X/S reproduce original Elite key assignments.
     // Rate targets are smoothed for analogue-feeling steering; releasing a
     // key recentres the control rate rather than snapping orientation back.
-    const maxRoll=1.28,maxPitch=.94;
+    const maxRoll=1.28,maxPitch=1.35;
     const rollInput=(keys.has('Period')?1:0)-(keys.has('Comma')?1:0);
-    const pitchInput=(keys.has('KeyX')?1:0)-(keys.has('KeyS')?1:0);
+    const pitchInput=((keys.has('KeyX')||keys.has('ArrowUp'))?1:0)-((keys.has('KeyS')||keys.has('ArrowDown'))?1:0);
     const smooth=1-Math.exp(-8*dt);
     pilot.rollRate+=(rollInput*maxRoll-pilot.rollRate)*smooth;
     pilot.pitchRate+=(pitchInput*maxPitch-pilot.pitchRate)*smooth;
