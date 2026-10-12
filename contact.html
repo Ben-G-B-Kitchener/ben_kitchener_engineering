@@ -231,11 +231,18 @@ function drawGrid(){
 
 function draw(){
 
-  ctx.fillStyle = "#000";
-  ctx.fillRect(0,0,canvas.width,canvas.height);
+/* Clear the screen without residual glow */
+ctx.save();
+ctx.shadowBlur = 0;
+ctx.shadowColor = "transparent";
+ctx.fillStyle = "#000";
+ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-  drawGrid();
-
+/* Draw sharp grid lines */
+ctx.lineWidth = 1;
+drawGrid();
+ctx.restore();
+  
   const xf = Number(xFreq.value);
   const yf = Number(yFreq.value);
 
@@ -269,12 +276,25 @@ function draw(){
     }
   }
 
-  ctx.strokeStyle = "#33ff66";
-  ctx.shadowColor = "#33ff66";
-  ctx.shadowBlur = 8;
-  ctx.lineWidth = 2;
-  ctx.stroke();
+/* CRT phosphor bloom: wide, diffuse halo */
+ctx.save();
 
+ctx.strokeStyle = "rgba(51,255,102,0.28)";
+ctx.shadowColor = "#33ff66";
+ctx.shadowBlur = 16;
+ctx.lineWidth = 5;
+ctx.stroke();
+
+/* Sharp, bright phosphor trace */
+ctx.strokeStyle = "#88ffaa";
+ctx.shadowColor = "#33ff66";
+ctx.shadowBlur = 5;
+ctx.lineWidth = 1.5;
+ctx.stroke();
+
+/* Restore canvas rendering state */
+ctx.restore();
+  
   t += 0.01;
 
   requestAnimationFrame(draw);
