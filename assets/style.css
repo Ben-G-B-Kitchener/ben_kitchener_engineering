@@ -359,13 +359,6 @@ a:hover {
 .scope-screen-panel {
   flex: 1 1 70%;
   min-width: 0;
-  filter:
-    grayscale(0.7)
-    sepia(0.45)
-    hue-rotate(45deg)
-    saturate(2.6)
-    brightness(0.82)
-    contrast(1.2);
 }
 
 .scope-controls {
