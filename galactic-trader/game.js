@@ -8,7 +8,10 @@
   const FAR = 1450, COUNT = 1100;
   let w = 1000, h = 625, last = 0, elapsed = 0, seed = 0x5eed;
   const pilot = {x:0,y:0,z:0,pitch:0,yaw:0,roll:0,speed:25};
-  const target = {x:0,y:12,z:350};
+  // Training contact stays within the forward viewport while its WORLD-fixed
+  // orientation is transformed through the same camera basis as the starfield.
+  // Future navigation targets will use world-space positions instead.
+  const trainingContact = {screenX:0.12,screenY:0.02,distance:160,scale:1.0};
   function rand(){seed = (1664525 * seed + 1013904223) >>> 0; return seed / 4294967296;}
   const stars = Array.from({length:COUNT}, () => ({x:(rand()-.5)*2*FAR,y:(rand()-.5)*2*FAR,z:(rand()-.5)*2*FAR,brightness:.3+rand()*.7,radius:.5+rand()*1.1,twinkle:rand()*TAU,prev:null}));
   const model = {
@@ -79,25 +82,33 @@
     ctx.restore();
   }
   function renderShip(){
-    // Fixed world-space target. Turning the pilot's view changes both its
-    // apparent position and its silhouette; it no longer rotates in place.
-    const verts=model.vertices.map(v=>cameraPoint(target.x+v[0],target.y+v[1],target.z+v[2]));
+    // A stabilised training contact: centre follows the pilot's viewport, but
+    // vertices have a FIXED world orientation. Thus A/D visibly changes the
+    // wireframe's silhouette instead of merely pushing it offscreen.
+    const c=trainingContact;
+    const centre=[c.screenX*c.distance,c.screenY*c.distance,c.distance];
+    const verts=model.vertices.map(v=>{
+      const x=v[0]*c.scale,y=v[1]*c.scale,z=v[2]*c.scale;
+      return [
+        centre[0]+x*right[0]+y*right[1]+z*right[2],
+        centre[1]+x*up[0]+y*up[1]+z*up[2],
+        centre[2]+x*forward[0]+y*forward[1]+z*forward[2]
+      ];
+    });
     ctx.save();ctx.shadowColor='#64ff9a';ctx.shadowBlur=12;
     for(const [a,b] of model.edges){
       const A=verts[a],B=verts[b];if(A[2]<3||B[2]<3)continue;
       const pa=project(A),pb=project(B);if(pa&&pb)line(pa[0],pa[1],pb[0],pb[1],.88,1.35);
     }
     ctx.restore();
-    const centre=project(cameraPoint(target.x,target.y,target.z));
-    if(centre&&centre[0]>0&&centre[0]<w&&centre[1]>0&&centre[1]<h){
-      label('CONTACT 01',centre[0]+30,centre[1]-20,10);
-    }
+    const xy=project(centre);
+    if(xy)label('CONTACT 01  [TRACK]',xy[0]+55,xy[1]-40,10);
   }
   function hud(boost){
     const pad=Math.max(18,w*.033),cx=w/2,cy=h/2;
     ctx.save();ctx.shadowColor='#4aff8d';ctx.shadowBlur=5;
     label('GALACTIC TRADER  //  NAVCOM',pad,28,Math.max(11,w*.016));
-    label('SOL SYSTEM',w-pad,28,Math.max(11,w*.016),'right');
+    label('TRAINING SECTOR',w-pad,28,Math.max(11,w*.016),'right');
     label(`SPD ${Math.round(pilot.speed).toString().padStart(3,'0')} KM/S`,pad,h-69);
     label(`HDG ${(((pilot.yaw*180/Math.PI)%360+360)%360).toFixed(0).padStart(3,'0')}°`,pad,h-47);
     label(`PITCH ${(pilot.pitch*180/Math.PI).toFixed(0)}°`,pad,h-25);
@@ -105,7 +116,7 @@
     label('CREDITS 100.0',w-pad,h-25,12,'right');
     line(cx-25,cy,cx-9,cy,.8);line(cx+9,cy,cx+25,cy,.8);line(cx,cy-25,cx,cy-9,.8);line(cx,cy+9,cx,cy+25,.8);
     ctx.strokeStyle='#62ff94';ctx.strokeRect(pad,h-113,Math.max(5,pilot.speed)*1.05,5);
-    label(boost?'BOOST ACTIVE':'SCANNER ONLINE',cx,h-25,11,'center');
+    label(boost?'BOOST ACTIVE':'CONTACT STABILISED',cx,h-25,11,'center');
     // Rotation indicator: yaw is a true heading change, not a ship model spin.
     label(`ROLL ${(pilot.roll*180/Math.PI).toFixed(0)}°`,cx,48,11,'center');
     ctx.restore();
