@@ -359,18 +359,6 @@ a:hover {
 .scope-screen-panel {
   flex: 1 1 70%;
   min-width: 0;
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background:
-    radial-gradient(
-      ellipse at center,
-      rgba(51,255,102,0.08) 0%,
-      rgba(0,0,0,0.18) 75%,
-      rgba(0,0,0,0.38) 100%
-    );
-  z-index: 4;
 }
 
 .scope-controls {
