@@ -7,7 +7,7 @@
   const TAU = Math.PI * 2;
   const FAR = 1450, COUNT = 1100;
   let w = 1000, h = 625, last = 0, elapsed = 0, seed = 0x5eed;
-  const pilot = {x:0,y:0,z:0,pitch:0,yaw:0,roll:0,speed:25};
+  const pilot = {x:0,y:0,z:0,speed:25, pitchRate:0, rollRate:0, pitchAngle:0, rollAngle:0};
   // The contact is a fixed object in WORLD space, never attached to the reticle.
   // Its nose points along +Z; its longitudinal (nose-to-tail) axis is Z.
   const trainingContact = {x:32,y:7,z:260,scale:1.0};
@@ -24,23 +24,32 @@
     for(const star of stars)star.prev=null;
   }
   new ResizeObserver(resize).observe(canvas);resize();
-  const controls = new Set(['KeyW','KeyS','KeyA','KeyD','KeyQ','KeyE','ArrowUp','ArrowDown','Space','KeyR']);
+  const controls = new Set(['KeyX','KeyS','Comma','Period','Space','Slash','KeyR']);
   addEventListener('keydown',e=>{if(controls.has(e.code)){e.preventDefault();keys.add(e.code);}if(e.code==='KeyR'&&!e.repeat)reset();});
   addEventListener('keyup',e=>keys.delete(e.code));
   addEventListener('blur',()=>keys.clear());
-  function reset(){Object.assign(pilot,{x:0,y:0,z:0,pitch:0,yaw:0,roll:0,speed:25});for(const s of stars)s.prev=null;status.textContent='NAV RESET';}
+  function reset(){Object.assign(pilot,{x:0,y:0,z:0,speed:25,pitchRate:0,rollRate:0,pitchAngle:0,rollAngle:0});right=[1,0,0];up=[0,1,0];forward=[0,0,1];for(const s of stars)s.prev=null;status.textContent='NAV RESET';}
 
-  // Three orthogonal camera axes in WORLD coordinates. Rotation applies local
-  // roll, pitch, yaw; projections use the inverse (dot products), not the
-  // forward camera rotation erroneously used in v0.1.1.
-  function rotateLocal(x,y,z){
-    const r=pilot.roll,p=pilot.pitch,a=pilot.yaw;
-    const x1=x*Math.cos(r)-y*Math.sin(r), y1=x*Math.sin(r)+y*Math.cos(r);
-    const y2=y1*Math.cos(p)-z*Math.sin(p), z2=y1*Math.sin(p)+z*Math.cos(p);
-    return [x1*Math.cos(a)+z2*Math.sin(a),y2,-x1*Math.sin(a)+z2*Math.cos(a)];
+  // Elite flight model: two LOCAL control axes, roll about the ship's
+  // nose-to-tail (forward) axis and pitch about its right/left axis.
+  // Maintain an orthonormal camera basis; do not accumulate global Euler angles.
+  let right=[1,0,0], up=[0,1,0], forward=[0,0,1];
+  const dot=(a,b)=>a[0]*b[0]+a[1]*b[1]+a[2]*b[2];
+  const cross=(a,b)=>[a[1]*b[2]-a[2]*b[1],a[2]*b[0]-a[0]*b[2],a[0]*b[1]-a[1]*b[0]];
+  function norm(a){const d=Math.hypot(...a)||1;return a.map(v=>v/d);}
+  function rotate(v,axis,angle){
+    const c=Math.cos(angle),s=Math.sin(angle),q=cross(axis,v),d=dot(axis,v)*(1-c);
+    return [v[0]*c+q[0]*s+axis[0]*d,v[1]*c+q[1]*s+axis[1]*d,v[2]*c+q[2]*s+axis[2]*d];
   }
-  let right, up, forward;
-  function updateBasis(){right=rotateLocal(1,0,0);up=rotateLocal(0,1,0);forward=rotateLocal(0,0,1);}
+  function steer(dp,dr){
+    // Positive pitch raises the nose, positive roll tilts right.
+    // Rotate both vectors around the same instantaneous LOCAL axis.
+    if(dp){up=rotate(up,right,-dp);forward=rotate(forward,right,-dp);}
+    if(dr){right=rotate(right,forward,-dr);up=rotate(up,forward,-dr);}
+    forward=norm(forward);
+    right=norm(cross(up,forward));
+    up=norm(cross(forward,right));
+  }
   function cameraPoint(x,y,z){
     const dx=x-pilot.x,dy=y-pilot.y,dz=z-pilot.z;
     return [dx*right[0]+dy*right[1]+dz*right[2],dx*up[0]+dy*up[1]+dz*up[2],dx*forward[0]+dy*forward[1]+dz*forward[2]];
@@ -105,31 +114,34 @@
     label('GALACTIC TRADER  //  NAVCOM',pad,28,Math.max(11,w*.016));
     label('TRAINING SECTOR',w-pad,28,Math.max(11,w*.016),'right');
     label(`SPD ${Math.round(pilot.speed).toString().padStart(3,'0')} KM/S`,pad,h-69);
-    label(`HDG ${(((pilot.yaw*180/Math.PI)%360+360)%360).toFixed(0).padStart(3,'0')}°`,pad,h-47);
-    label(`PITCH ${(pilot.pitch*180/Math.PI).toFixed(0)}°`,pad,h-25);
+    label(`ROLL RATE ${(pilot.rollRate*180/Math.PI).toFixed(0)}°/S`,pad,h-47);
+    label(`PITCH RATE ${(pilot.pitchRate*180/Math.PI).toFixed(0)}°/S`,pad,h-25);
     label('SHIELDS 100%',w-pad,h-69,12,'right');label('FUEL 100%',w-pad,h-47,12,'right');
     label('CREDITS 100.0',w-pad,h-25,12,'right');
     line(cx-25,cy,cx-9,cy,.8);line(cx+9,cy,cx+25,cy,.8);line(cx,cy-25,cx,cy-9,.8);line(cx,cy+9,cx,cy+25,.8);
     ctx.strokeStyle='#62ff94';ctx.strokeRect(pad,h-113,Math.max(5,pilot.speed)*1.05,5);
-    label(boost?'BOOST ACTIVE':'WORLD-SPACE CONTACT',cx,h-25,11,'center');
-    // Roll is around the ship front-to-back (+Z) axis; yaw is vertical (+Y).
-    label(`ROLL ${(pilot.roll*180/Math.PI).toFixed(0)}°`,cx,48,11,'center');
+    label('CLASSIC ELITE FLIGHT // NO YAW',cx,h-25,11,'center');
+    label(`ROLL ${((pilot.rollAngle*180/Math.PI)%360).toFixed(0)}°  PITCH ${((pilot.pitchAngle*180/Math.PI)%360).toFixed(0)}°`,cx,48,11,'center');
     ctx.restore();
   }
   function frame(ms){
     const dt=Math.min((ms-last)/1000||0,.05);last=ms;elapsed+=dt;
-    const turn=1.0*dt;
-    if(keys.has('KeyW'))pilot.pitch+=turn;
-    if(keys.has('KeyS'))pilot.pitch-=turn;
-    if(keys.has('KeyA'))pilot.roll-=turn;
-    if(keys.has('KeyD'))pilot.roll+=turn;
-    if(keys.has('KeyQ'))pilot.yaw-=turn;
-    if(keys.has('KeyE'))pilot.yaw+=turn;
-    if(keys.has('ArrowUp'))pilot.speed+=40*dt;
-    if(keys.has('ArrowDown'))pilot.speed-=40*dt;
+    // Period/comma and X/S reproduce original Elite key assignments.
+    // Rate targets are smoothed for analogue-feeling steering; releasing a
+    // key recentres the control rate rather than snapping orientation back.
+    const maxRoll=1.28,maxPitch=.94;
+    const rollInput=(keys.has('Period')?1:0)-(keys.has('Comma')?1:0);
+    const pitchInput=(keys.has('KeyX')?1:0)-(keys.has('KeyS')?1:0);
+    const smooth=1-Math.exp(-8*dt);
+    pilot.rollRate+=(rollInput*maxRoll-pilot.rollRate)*smooth;
+    pilot.pitchRate+=(pitchInput*maxPitch-pilot.pitchRate)*smooth;
+    const dp=pilot.pitchRate*dt, dr=pilot.rollRate*dt;
+    steer(dp,dr);
+    pilot.pitchAngle+=dp;pilot.rollAngle+=dr;
+    if(keys.has('Space'))pilot.speed+=36*dt;
+    if(keys.has('Slash'))pilot.speed-=36*dt;
     pilot.speed=Math.max(0,Math.min(150,pilot.speed));
-    updateBasis();
-    const boost=keys.has('Space'),step=pilot.speed*(boost?3:1)*dt;
+    const boost=false,step=pilot.speed*dt;
     pilot.x+=forward[0]*step;pilot.y+=forward[1]*step;pilot.z+=forward[2]*step;
     ctx.clearRect(0,0,w,h);
     renderStars(dt,boost);renderShip();hud(boost);
