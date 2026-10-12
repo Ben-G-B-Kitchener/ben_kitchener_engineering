@@ -8,10 +8,9 @@
   const FAR = 1450, COUNT = 1100;
   let w = 1000, h = 625, last = 0, elapsed = 0, seed = 0x5eed;
   const pilot = {x:0,y:0,z:0,pitch:0,yaw:0,roll:0,speed:25};
-  // Training contact stays within the forward viewport while its WORLD-fixed
-  // orientation is transformed through the same camera basis as the starfield.
-  // Future navigation targets will use world-space positions instead.
-  const trainingContact = {screenX:0.12,screenY:0.02,distance:160,scale:1.0};
+  // The contact is a fixed object in WORLD space, never attached to the reticle.
+  // Its nose points along +Z; its longitudinal (nose-to-tail) axis is Z.
+  const trainingContact = {x:32,y:7,z:260,scale:1.0};
   function rand(){seed = (1664525 * seed + 1013904223) >>> 0; return seed / 4294967296;}
   const stars = Array.from({length:COUNT}, () => ({x:(rand()-.5)*2*FAR,y:(rand()-.5)*2*FAR,z:(rand()-.5)*2*FAR,brightness:.3+rand()*.7,radius:.5+rand()*1.1,twinkle:rand()*TAU,prev:null}));
   const model = {
@@ -82,27 +81,23 @@
     ctx.restore();
   }
   function renderShip(){
-    // A stabilised training contact: centre follows the pilot's viewport, but
-    // vertices have a FIXED world orientation. Thus A/D visibly changes the
-    // wireframe's silhouette instead of merely pushing it offscreen.
     const c=trainingContact;
-    const centre=[c.screenX*c.distance,c.screenY*c.distance,c.distance];
-    const verts=model.vertices.map(v=>{
-      const x=v[0]*c.scale,y=v[1]*c.scale,z=v[2]*c.scale;
-      return [
-        centre[0]+x*right[0]+y*right[1]+z*right[2],
-        centre[1]+x*up[0]+y*up[1]+z*up[2],
-        centre[2]+x*forward[0]+y*forward[1]+z*forward[2]
-      ];
-    });
+    // Convert EVERY vertex from the ship's fixed world coordinates into
+    // camera coordinates. Never anchor its centre to screen positions.
+    const verts=model.vertices.map(v=>cameraPoint(
+      c.x+v[0]*c.scale,c.y+v[1]*c.scale,c.z+v[2]*c.scale
+    ));
     ctx.save();ctx.shadowColor='#64ff9a';ctx.shadowBlur=12;
     for(const [a,b] of model.edges){
-      const A=verts[a],B=verts[b];if(A[2]<3||B[2]<3)continue;
-      const pa=project(A),pb=project(B);if(pa&&pb)line(pa[0],pa[1],pb[0],pb[1],.88,1.35);
+      const A=verts[a],B=verts[b];
+      if(A[2]<3||B[2]<3)continue;
+      const pa=project(A),pb=project(B);
+      if(pa&&pb)line(pa[0],pa[1],pb[0],pb[1],.88,1.35);
     }
     ctx.restore();
-    const xy=project(centre);
-    if(xy)label('CONTACT 01  [TRACK]',xy[0]+55,xy[1]-40,10);
+    const xy=project(cameraPoint(c.x,c.y,c.z));
+    if(xy && xy[0]>0 && xy[0]<w && xy[1]>0 && xy[1]<h)
+      label('CONTACT 01',xy[0]+35,xy[1]-28,10);
   }
   function hud(boost){
     const pad=Math.max(18,w*.033),cx=w/2,cy=h/2;
@@ -116,8 +111,8 @@
     label('CREDITS 100.0',w-pad,h-25,12,'right');
     line(cx-25,cy,cx-9,cy,.8);line(cx+9,cy,cx+25,cy,.8);line(cx,cy-25,cx,cy-9,.8);line(cx,cy+9,cx,cy+25,.8);
     ctx.strokeStyle='#62ff94';ctx.strokeRect(pad,h-113,Math.max(5,pilot.speed)*1.05,5);
-    label(boost?'BOOST ACTIVE':'CONTACT STABILISED',cx,h-25,11,'center');
-    // Rotation indicator: yaw is a true heading change, not a ship model spin.
+    label(boost?'BOOST ACTIVE':'WORLD-SPACE CONTACT',cx,h-25,11,'center');
+    // Roll is around the ship front-to-back (+Z) axis; yaw is vertical (+Y).
     label(`ROLL ${(pilot.roll*180/Math.PI).toFixed(0)}°`,cx,48,11,'center');
     ctx.restore();
   }
@@ -126,10 +121,10 @@
     const turn=1.0*dt;
     if(keys.has('KeyW'))pilot.pitch+=turn;
     if(keys.has('KeyS'))pilot.pitch-=turn;
-    if(keys.has('KeyA'))pilot.yaw-=turn;
-    if(keys.has('KeyD'))pilot.yaw+=turn;
-    if(keys.has('KeyQ'))pilot.roll-=turn;
-    if(keys.has('KeyE'))pilot.roll+=turn;
+    if(keys.has('KeyA'))pilot.roll-=turn;
+    if(keys.has('KeyD'))pilot.roll+=turn;
+    if(keys.has('KeyQ'))pilot.yaw-=turn;
+    if(keys.has('KeyE'))pilot.yaw+=turn;
     if(keys.has('ArrowUp'))pilot.speed+=40*dt;
     if(keys.has('ArrowDown'))pilot.speed-=40*dt;
     pilot.speed=Math.max(0,Math.min(150,pilot.speed));
