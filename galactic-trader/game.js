@@ -138,7 +138,6 @@
       line(cx,cy+45,cx,cy+45+dir*Math.abs(pitchCue)*24,.95,2);
       label(pitchCue>0?'CLIMB':'DIVE',cx+12,cy+51,10);
     }
-    label('PITCH: X / S OR UP / DOWN   //   ROLL: , / .',cx,h-25,11,'center');
     label(`ROLL ${((pilot.rollAngle*180/Math.PI)%360).toFixed(0)}°  PITCH ${((pilot.pitchAngle*180/Math.PI)%360).toFixed(0)}°`,cx,48,11,'center');
     ctx.restore();
   }
