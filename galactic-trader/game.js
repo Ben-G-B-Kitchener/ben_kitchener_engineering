@@ -24,7 +24,7 @@
     for(const star of stars)star.prev=null;
   }
   new ResizeObserver(resize).observe(canvas);resize();
-  const controls = new Set(['KeyX','KeyS','ArrowUp','ArrowDown','Comma','Period','Space','Slash','KeyR']);
+  const controls = new Set(['KeyS','KeyW','ArrowUp','ArrowDown','KeyA','KeyD','Space','Slash','KeyR']);
   addEventListener('keydown',e=>{if(controls.has(e.code)){e.preventDefault();keys.add(e.code);}if(e.code==='KeyR'&&!e.repeat)reset();});
   addEventListener('keyup',e=>keys.delete(e.code));
   addEventListener('blur',()=>keys.clear());
@@ -144,12 +144,12 @@
   }
   function frame(ms){
     const dt=Math.min((ms-last)/1000||0,.05);last=ms;elapsed+=dt;
-    // Period/comma and X/S reproduce original Elite key assignments.
+    // KeyD/comma and X/S reproduce original Elite key assignments.
     // Rate targets are smoothed for analogue-feeling steering; releasing a
     // key recentres the control rate rather than snapping orientation back.
     const maxRoll=1.28,maxPitch=1.35;
-    const rollInput=(keys.has('Period')?1:0)-(keys.has('Comma')?1:0);
-    const pitchInput=((keys.has('KeyX')||keys.has('ArrowUp'))?1:0)-((keys.has('KeyS')||keys.has('ArrowDown'))?1:0);
+    const rollInput=(keys.has('KeyD')?1:0)-(keys.has('KeyA')?1:0);
+    const pitchInput=((keys.has('KeyS')||keys.has('ArrowUp'))?1:0)-((keys.has('KeyW')||keys.has('ArrowDown'))?1:0);
     const smooth=1-Math.exp(-8*dt);
     pilot.rollRate+=(rollInput*maxRoll-pilot.rollRate)*smooth;
     pilot.pitchRate+=(pitchInput*maxPitch-pilot.pitchRate)*smooth;
