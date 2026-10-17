@@ -1,0 +1,19 @@
+/* ZX Spectrum Elite page; inherits existing site theme. */
+.elite-layout{display:grid;grid-template-columns:minmax(0,1fr) 310px;gap:1.25rem;align-items:start}
+.elite-main,.elite-side{min-width:0}
+.elite-screen{background:#000;border:1px solid var(--border);border-radius:.25rem;min-height:290px;display:flex;justify-content:center;align-items:center;overflow:auto;padding:1rem}
+#elite-emulator{max-width:100%;margin:auto;text-shadow:none;letter-spacing:normal}
+#elite-emulator canvas{max-width:100%;height:auto;image-rendering:pixelated}
+.elite-placeholder{text-align:center;padding:2rem 1rem;color:var(--muted)}
+.elite-actions{display:flex;flex-wrap:wrap;gap:.7rem;margin:1.1rem 0}
+.elite-actions button,.elite-actions label{font:inherit;font-size:.87rem;color:var(--heading);background:rgba(25,60,30,.8);border:1px solid var(--border);padding:.6rem .8rem;border-radius:4px;cursor:pointer}
+.elite-actions button:hover,.elite-actions label:hover{border-color:var(--accent);box-shadow:0 0 10px var(--accent-glow)}
+.elite-actions button:disabled{opacity:.35;cursor:not-allowed}
+.elite-status{min-height:2em;color:var(--muted);overflow-wrap:anywhere}
+.elite-side .card+.card{margin-top:1.25rem}
+.elite-note{font-size:.9rem}
+.elite-label{font-size:.8rem;text-transform:uppercase;letter-spacing:.1em;color:var(--accent)}
+.elite-keymap{display:grid;grid-template-columns:auto 1fr;gap:.4rem .7rem;font-size:.84rem}
+.elite-keymap dt{font-weight:bold;color:var(--heading)}
+.elite-keymap dd{margin:0}
+@media(max-width:920px){.elite-layout{grid-template-columns:1fr}.elite-screen{padding:.35rem;min-height:230px}}
