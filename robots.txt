@@ -1,5 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap:
-https://ben-g-b-kitchener.github.io/ben-kitchener-engineering/sitemap.xml

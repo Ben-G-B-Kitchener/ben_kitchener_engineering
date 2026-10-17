@@ -60,17 +60,6 @@ content="https://ben-g-b-kitchener.github.io/ben_kitchener_engineering/projects.
   <p class="muted">RETRO COMPUTING / ZX SPECTRUM 48K / 1985</p>
   <h2>Elite — ZX Spectrum</h2>
   <p>The original ZX Spectrum edition of the 3D space-trading classic, played in a browser emulator. The game runs separately from Galactic Trader.</p>
-  <section class="card elite-online" aria-labelledby="elite-online-title">
-    <h3 id="elite-online-title">Play Elite now</h3>
-    <p>Use the existing playable Spectrum version below. If the game provider prevents embedding, use <strong>Open game in a new tab</strong> instead.</p>
-    <div class="elite-online-actions">
-      <button id="elite-online-load" type="button">Load online player</button>
-      <a class="elite-launch" href="https://online.oldgames.sk/play/spectrum/elite/201" target="_blank" rel="noopener noreferrer">Open game in a new tab ↗</a>
-    </div>
-    <div id="elite-online-frame" class="elite-online-frame" hidden></div>
-    <p class="elite-note">The online player is operated by OldGames.sk, not this website. Its interface and game content are not copied or redistributed here. Some providers block embedded frames; the new-tab link will still work.</p>
-  </section>
-  <h3 class="elite-local-heading">Locally hosted JSSpeccy player (optional)</h3>
   <div class="elite-layout">
     <section class="elite-main card" aria-labelledby="elite-player-heading">
       <h3 id="elite-player-heading">Spectrum Emulator</h3>
@@ -100,26 +89,6 @@ content="https://ben-g-b-kitchener.github.io/ben_kitchener_engineering/projects.
   </div>
 </main>
 <footer class="footer">© 2026 Ben G. B. Kitchener</footer>
-<script>
-(() => {
-  const button = document.getElementById('elite-online-load');
-  const region = document.getElementById('elite-online-frame');
-  button.addEventListener('click', () => {
-    if (region.querySelector('iframe')) return;
-    const frame = document.createElement('iframe');
-    frame.title = 'ZX Spectrum Elite on OldGames.sk';
-    frame.src = 'https://online.oldgames.sk/play/spectrum/elite/201';
-    frame.loading = 'eager';
-    frame.referrerPolicy = 'no-referrer';
-    frame.allow = 'fullscreen; autoplay';
-    frame.allowFullscreen = true;
-    region.appendChild(frame);
-    region.hidden = false;
-    button.disabled = true;
-    button.textContent = 'Online player requested';
-  });
-})();
-</script>
 <script src="assets/elite-spectrum.js"></script>
 </body>
 </html>

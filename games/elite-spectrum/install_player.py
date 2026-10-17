@@ -34,6 +34,8 @@ def unpack_runtime(data):
         dest.parent.mkdir(parents=True, exist_ok=True)
         dest.write_bytes(archive.read(member))
         written += 1
+    if not (target / 'jsspeccy.js').is_file() or not any(target.rglob('*.wasm')):
+        raise RuntimeError('Incomplete JSSpeccy installation: JavaScript or WebAssembly runtime missing')
     print(f'Installed JSSpeccy: {written} files at {target}')
 
 def install_emulator():
