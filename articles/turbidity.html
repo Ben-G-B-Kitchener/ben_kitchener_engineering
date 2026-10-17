@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+<title>
+Ben Kitchener | Fusion Electronics Engineer | Scientific Instrumentation | Turbidity | Suspended Sediment
+</title>
+
+<meta name="description"
+content="Portfolio of Ben Kitchener — Senior Electronics Engineer specialising in fusion technology, cryogenic instrumentation, scientific instrumentation,
+  control systems, LabVIEW, and CERN ATLAS collaboration.">
+
+<meta name="keywords"
+content="fusion engineering, instrumentation engineer, scientific instrumentation, electronics, LabVIEW, software development, cryogenics,
+  CERN, UKAEA, superconductors, control systems,
+  physical geography, turbidity, light scattering, mie theory, suspended sediment, CLARITAS, TARDIIS, water quality">
+
+<meta name="author" content="Ben Kitchener">
+
+<meta property="og:title"
+content="Ben Kitchener Engineering Portfolio">
+
+<meta property="og:description"
+content="Portfolio of Ben Kitchener — Senior Electronics Engineer specialising in fusion technology,
+  cryogenic instrumentation, scientific instrumentation, control systems, LabVIEW, and CERN ATLAS collaboration. 
+  Independent researcher into turbidity and suspended sediment.">
+<meta property="og:type" content="website">
+
+<meta property="og:url"
+content="https://ben-g-b-kitchener.github.io/ben_kitchener_engineering/">
+
+<link rel="stylesheet" href="../assets/style.css"/>
+</head>
+
+<body>
+
+<header class="header">
+  <div class="section header-inner">
+
+    <div>
+      <h1>Ben Kitchener</h1>
+      <p class="muted">Engineering Portfolio</p>
+    </div>
+
+    <nav class="nav">
+      <a href="../index.html">Home</a>
+      <a href="../about.html">About</a>
+      <a href="../projects.html">Projects</a>
+      <a href="../experience.html">Experience</a>
+      <a href="../education.html">Education</a>
+      <a href="../publications.html">Publications</a>
+      <a href="../articles.html"><b>Articles</b></a>
+      <a href="turbidity.html"><b><i>Turbidity</i></b></a>
+      <a href="../contact.html">Contact</a>
+    </nav>
+
+  </div>
+</header>
+
+
+<section class="section">
+
+  <div class="card">
+
+    <p class="muted">
+      Technical Article • Turbidity • Suspended Sediment • Scientific Instrumentation
+    </p>
+
+    <h2>
+      Turbidity Measurement and Suspended Sediment Research
+    </h2>
+
+    <p>
+      <b>Ben G. B. Kitchener</b>
+    </p>
+
+    <p>
+      Turbidity measurement is widely used as a practical proxy for suspended sediment concentration, water quality,
+      and optical clarity. However, turbidity is not a direct physical measurement of sediment concentration. It is an
+      optical response that depends on particle size, particle shape, refractive index, wavelength, detector geometry,
+      and the optical design of the instrument.
+    </p>
+
+    <p>
+      My research interest in turbidity developed through work on suspended sediment monitoring and the design of
+      scientific instrumentation for laboratory and field-scale sediment research. This included the development of
+      low-cost turbidity measurement hardware and a review of the physical principles behind turbidity measurement.
+    </p>
+
+    <h3>Why turbidity is difficult to interpret</h3>
+
+    <p>
+      Turbidity instruments do not measure sediment mass directly. They measure scattered or transmitted light,
+      which is then related to a calibration standard or empirical sediment concentration model. This means that two water samples with
+      the same suspended sediment concentration can produce different
+      turbidity readings if their particle size distributions, mineralogy, colour, or organic content differ.
+    </p>
+
+    <h3>Instrument geometry matters</h3>
+
+    <p>
+      Different turbidity instruments use different optical geometries. Some measure light transmitted through
+      the sample, while others measure light scattered at an angle. Nephelometric instruments commonly use
+      detection near 90 degrees, but this is only one possible measurement geometry.
+      The geometry of the light source, detector, sample path, and wavelength selection all influence the
+      instrument response.
+    </p>
+
+    <p>
+      In my PhD thesis I challenged conventional turbidity units and their use as proxies for suspended sediment concentration. 
+      I developed a research instrument and proposed calibrated, multi-angle light-attenuation measurements reported in decibels,
+      with angle and wavelength explicitly recorded to improve comparisons between instruments. 
+      Through numerical modelling, I identified the importance of beam divergence and the need to combine Mie scattering
+      with geometric optics. I also explored how further modelling could help infer sediment particle size and shape and improve 
+      concentration estimates. Initial modelling of the TARDIIS instrument was developed in LabVIEW. This platform is actually a bad choice for model 
+      development for many reasons, but it was the only tool I had available at the time. I have now developed a GPU-accelerated Monte Carlo model called CLARITAS,
+      which is now available on <a href="https://github.com/Ben-G-B-Kitchener/TARDIIS_and_CLARITAS">GitHub</a>, 
+      and is discussed in detail here: <a href="claritas.html">CLARITAS</a>. The new CLARITAS model (the original is also called CLARITAS, but is thankfully not
+      available for download) attempts to account for the full experiment geometry, including the light source, detector, and sample container, and the water vortex caused by the
+      stirring of the sample. It also includes a more complete treatment of Mie scattering and geometric optics, and models the steady-state distribution of sediment in
+      the water column. There is still room for improvement, and I intend to continue its development in the future. However, in its current form it is a useful tool for understanding
+      the optical response of sediment-laden water and the limitations of turbidity measurement. It can also (with some effort) be adapted to other instrument
+      geometries and sediments. Future revisions will have a more configurable design.
+    </p>
+
+    <h3>CLARITAS Model Output</h3>
+
+    <div class="image-wrapper">
+      <img
+          src="../assets/turbidity/CLARITAS_3D_plots.jpg"
+          alt="CLARITAS 3D Model Output"
+          class="retro-image"
+       />
+    </div>
+
+    
+  </div>
+
+</section>
+
+
+<section class="section" style="padding-top:1.5rem;">
+
+  <div class="masonry-grid">
+
+    <!-- LEFT COLUMN -->
+
+    <div class="masonry-grid-column">
+      <div class="card">
+
+        <h3>Loess Sediment Response</h3>
+
+        <div class="image-wrapper">
+          <img
+              src="../assets/turbidity/loess_622nm_retro_green.png"
+              alt="Loess Sediment Response"
+              class="retro-image"
+          />
+        </div>
+      </div>
+
+      <div class="card">
+
+        <h3>Sensor Plane Cross-Section Example</h3>
+
+        <div class="image-wrapper">
+          <img
+              src="../assets/turbidity/light_transport_sensor_plane_retro_green.png"
+              alt="Sensor Plane Cross-Section Example"
+              class="retro-image"
+          />
+        </div>
+      </div>
+
+
+      <div class="card">
+
+        <h3>Related instrumentation</h3>
+
+        <p>
+          I designed and built a scientific instrument for water turbidity measurement, described in a HardwareX
+          journal article.
+        </p>
+
+        <p>
+          <a href="https://doi.org/10.1016/j.ohx.2019.e00052"
+             target="_blank"
+             rel="noopener noreferrer">
+            <b><u>HardwareX turbidity measurement device article</u></b>
+          </a>
+        </p>
+
+
+      </div>
+    </div>  
+
+
+    <!-- RIGHT COLUMN -->
+    <div class="masonry-grid-column">
+
+      <div class="card">
+
+        <h3>Kaolin Sediment Response</h3>
+
+        <div class="image-wrapper">
+          <img
+              src="../assets/turbidity/kaolin_622nm_retro_green.png"
+              alt="Kaolin Sediment Response"
+              class="retro-image"
+          />
+        </div>
+      </div>
+
+      <div class="card">
+
+        <h3>Vertical Cross-Section Example</h3>
+
+        <div class="image-wrapper">
+          <img
+              src="../assets/turbidity/light_transport_vertical_retro_green.png"
+              alt="Vertical Cross-Section Example"
+              class="retro-image"
+          />
+        </div>
+      </div>
+
+      
+      <div class="card">
+
+        <h3>Related publications</h3>
+
+        <p>
+          <a href="https://doi.org/10.1177/0309133317726540"
+             target="_blank"
+             rel="noopener noreferrer">
+            <b><u>A review of the principles of turbidity measurement</u></b>
+          </a>
+        </p>
+
+        <p>
+          <a href="../publications.html">
+            View publications page
+          </a>
+        </p>
+
+      </div>
+
+    </div>
+
+
+  </div>
+
+</section>
+
+
+<footer class="footer">
+© 2026 Ben G. B. Kitchener
+</footer>
+
+</body>
+</html>

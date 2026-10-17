@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="516.6pt" height="291.6pt" viewBox="0 0 516.6 291.6" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:date>2026-10-10T23:08:52.102314</dc:date>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.10.8, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 291.6 
+L 516.6 291.6 
+L 516.6 0 
+L 0 0 
+z
+" style="fill: #050805"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 22.266 62.64 
+L 243.234 62.64 
+L 243.234 18.288 
+L 22.266 18.288 
+z
+" clip-path="url(#p1db34f9d6e)" style="fill: #0a120a; stroke: #7dff8a; stroke-width: 1.2; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 273.366 62.64 
+L 494.334 62.64 
+L 494.334 18.288 
+L 273.366 18.288 
+z
+" clip-path="url(#p1db34f9d6e)" style="fill: #0a120a; stroke: #7dff8a; stroke-width: 1.2; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 22.266 151.344 
+L 243.234 151.344 
+L 243.234 104.22 
+L 22.266 104.22 
+z
+" clip-path="url(#p1db34f9d6e)" style="fill: #0a120a; stroke: #7dff8a; stroke-width: 1.2; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_5">
+    <path d="M 273.366 151.344 
+L 494.334 151.344 
+L 494.334 104.22 
+L 273.366 104.22 
+z
+" clip-path="url(#p1db34f9d6e)" style="fill: #0a120a; stroke: #7dff8a; stroke-width: 1.2; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_6">
+    <path d="M 132.75 64.642357 
+Q 132.75 83.433524 132.75 100.659444 
+" clip-path="url(#p1db34f9d6e)" style="fill: none; stroke: #7dff8a; stroke-width: 1.4; stroke-linecap: round"/>
+    <path d="M 135.55 95.059444 
+L 132.75 100.659444 
+L 129.95 95.059444 
+z
+" clip-path="url(#p1db34f9d6e)" style="fill: #7dff8a; stroke: #7dff8a; stroke-width: 1.4; stroke-linecap: round"/>
+   </g>
+   <g id="patch_7">
+    <path d="M 383.85 64.642357 
+Q 383.85 83.433524 383.85 100.659444 
+" clip-path="url(#p1db34f9d6e)" style="fill: none; stroke: #7dff8a; stroke-width: 1.4; stroke-linecap: round"/>
+    <path d="M 386.65 95.059444 
+L 383.85 100.659444 
+L 381.05 95.059444 
+z
+" clip-path="url(#p1db34f9d6e)" style="fill: #7dff8a; stroke: #7dff8a; stroke-width: 1.4; stroke-linecap: round"/>
+   </g>
+   <g id="patch_8">
+    <path d="M 82.53 228.96 
+L 434.07 228.96 
+L 434.07 184.608 
+L 82.53 184.608 
+z
+" clip-path="url(#p1db34f9d6e)" style="fill: #0a120a; stroke: #7dff8a; stroke-width: 1.2; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_9">
+    <path d="M 132.75 153.34585 
+Q 132.75 167.975177 132.75 181.039258 
+" clip-path="url(#p1db34f9d6e)" style="fill: none; stroke: #7dff8a; stroke-width: 1.4; stroke-linecap: round"/>
+    <path d="M 135.55 175.439258 
+L 132.75 181.039258 
+L 129.95 175.439258 
+z
+" clip-path="url(#p1db34f9d6e)" style="fill: #7dff8a; stroke: #7dff8a; stroke-width: 1.4; stroke-linecap: round"/>
+   </g>
+   <g id="patch_10">
+    <path d="M 383.85 153.34585 
+Q 383.85 167.975177 383.85 181.039258 
+" clip-path="url(#p1db34f9d6e)" style="fill: none; stroke: #7dff8a; stroke-width: 1.4; stroke-linecap: round"/>
+    <path d="M 386.65 175.439258 
+L 383.85 181.039258 
+L 381.05 175.439258 
+z
+" clip-path="url(#p1db34f9d6e)" style="fill: #7dff8a; stroke: #7dff8a; stroke-width: 1.4; stroke-linecap: round"/>
+   </g>
+   <g id="patch_11">
+    <path d="M 82.53 284.4 
+L 434.07 284.4 
+L 434.07 253.908 
+L 82.53 253.908 
+z
+" clip-path="url(#p1db34f9d6e)" style="fill: #0a120a; stroke: #7dff8a; stroke-width: 1.2; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_12">
+    <path d="M 258.3 230.960834 
+Q 258.3 241.435801 258.3 250.34552 
+" clip-path="url(#p1db34f9d6e)" style="fill: none; stroke: #7dff8a; stroke-width: 1.4; stroke-linecap: round"/>
+    <path d="M 261.1 244.74552 
+L 258.3 250.34552 
+L 255.5 244.74552 
+z
+" clip-path="url(#p1db34f9d6e)" style="fill: #7dff8a; stroke: #7dff8a; stroke-width: 1.4; stroke-linecap: round"/>
+   </g>
+   <g id="text_1">
+    <text style="font-size: 12px; font-family: 'DejaVu Sans'; fill: #b6ffbf" transform="translate(81.225938 37.056562)">Material and PSD</text>
+    <text style="font-size: 12px; font-family: 'DejaVu Sans'; fill: #b6ffbf" transform="translate(40.250625 50.493937)">Concentration and wavelength</text>
+   </g>
+   <g id="text_2">
+    <text style="font-size: 12px; font-family: 'DejaVu Sans'; fill: #b6ffbf" transform="translate(327.646875 37.056562)">Cell and interfaces</text>
+    <text style="font-size: 12px; font-family: 'DejaVu Sans'; fill: #b6ffbf" transform="translate(297.310313 50.493937)">Prescribed flow and diffusion</text>
+   </g>
+   <g id="text_3">
+    <text style="font-size: 12px; font-family: 'DejaVu Sans'; fill: #b6ffbf" transform="translate(69.852187 124.374562)">Per-bin optical tables</text>
+    <text style="font-size: 12px; font-family: 'DejaVu Sans'; fill: #b6ffbf" transform="translate(35.979375 137.811937)">Mie efficiencies and phase CDFs</text>
+   </g>
+   <g id="text_4">
+    <text style="font-size: 12px; font-family: 'DejaVu Sans'; fill: #b6ffbf" transform="translate(296.371875 124.374562)">Per-bin steady sediment field</text>
+    <text style="font-size: 12px; font-family: 'DejaVu Sans'; fill: #b6ffbf" transform="translate(314.134688 137.811937)">Local number densities</text>
+   </g>
+   <g id="text_5">
+    <text style="font-size: 12px; font-family: 'DejaVu Sans'; fill: #b6ffbf" transform="translate(202.021875 203.376562)">CUDA ray histories</text>
+    <text style="font-size: 12px; font-family: 'DejaVu Sans'; fill: #b6ffbf" transform="translate(126.430313 216.813937)">Particle channels and apparatus boundaries</text>
+   </g>
+   <g id="text_6">
+    <text style="font-size: 12px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #b6ffbf" x="258.3" y="272.46525" transform="rotate(-0 258.3 272.46525)">Detector response and physical diagnostics</text>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="p1db34f9d6e">
+   <rect x="7.2" y="7.2" width="502.2" height="277.2"/>
+  </clipPath>
+ </defs>
+</svg>
