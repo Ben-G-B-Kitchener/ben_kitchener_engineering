@@ -4,21 +4,28 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <meta name="theme-color" content="#050805"/>
-<title>DOOM (1993) | Retro Arcade</title>
-<meta name="description" content="Browser-based DOOM arcade player."/>
+<title>DOOM / Freedoom | Games</title>
+<meta name="description" content="Play Freedoom on Ben Kitchener's retro Games page."/>
 <link rel="stylesheet" href="../assets/style.css"/>
 <style>
-  .doom-wrap{max-width:1180px;margin:0 auto;padding:2rem 1.5rem 4rem}
-  .doom-title{display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin-bottom:1rem}
-  .doom-player{background:#000; border:1px solid var(--border,#3a8b4c); box-shadow:0 0 22px rgba(51,255,102,.14); padding:12px; border-radius:6px}
-  .doom-player iframe{display:block;width:100%;aspect-ratio:4/3; border:0;background:#000;min-height:300px}
-  .doom-toolbar{display:flex; flex-wrap:wrap;gap:.7rem;margin-top:1rem}
-  .doom-toolbar button{font:inherit;cursor:pointer;color:var(--heading,#b6ffbf); background:var(--bg-alt,#0a120a);border:1px solid var(--border,#3a8b4c);padding:.6rem 1rem}
-  .doom-toolbar button:hover,.doom-toolbar button:focus-visible{border-color:var(--accent,#33ff66)}
-  .doom-help{margin-top:1.3rem}
-  .doom-help p{margin:.7rem 0}
-  #doom-status{color:var(--muted,#4fbf63);font-size:.9rem}
-  @media(max-width:650px){.doom-player{padding:4px}.doom-player iframe{min-height:220px}}
+.doom-wrap{max-width:1400px;margin:auto;padding:2rem 1.5rem 4rem}
+.doom-title{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;margin-bottom:1rem}
+.doom-frame{max-width:1120px;margin:auto}
+.doom-screen{position:relative;background:#000;border:1px solid rgba(51,255,102,.35);border-radius:4px;overflow:hidden;box-shadow:0 0 24px rgba(51,255,102,.19),inset 0 0 30px rgba(51,255,102,.08);isolation:isolate}
+.doom-screen iframe{display:block;width:100%;aspect-ratio:4/3;border:0;background:#000;filter:grayscale(.72) sepia(.72) hue-rotate(55deg) saturate(1.5) brightness(.89) contrast(1.17);}
+/* Actual-game overlays, ABOVE iframe pixels but entirely transparent to mouse and keyboard. */
+.doom-screen::before,.doom-screen::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:10}
+.doom-screen::before{background:repeating-linear-gradient(to bottom,transparent 0,transparent 2px,rgba(35,235,88,.20) 3px,transparent 4px);opacity:.62;mix-blend-mode:screen}
+.doom-screen::after{background:radial-gradient(ellipse at center,transparent 50%,rgba(0,24,4,.60) 100%),linear-gradient(to bottom,rgba(15,255,77,.035),transparent 25%,rgba(12,255,62,.035));box-shadow:inset 0 0 54px rgba(0,0,0,.35)}
+.doom-toolbar{display:flex;flex-wrap:wrap;align-items:center;gap:.8rem;margin:1rem 0}
+.doom-toolbar button{font:inherit;cursor:pointer;color:var(--heading);background:var(--bg-alt);border:1px solid var(--border);padding:.55rem .95rem}
+.doom-toolbar button:hover,.doom-toolbar button:focus-visible{border-color:var(--accent)}
+.doom-help{margin-top:1.5rem}
+#doom-status{font-size:.88rem;color:var(--muted)}
+.doom-screen:fullscreen{display:flex;align-items:center;justify-content:center;background:#000;border:0;border-radius:0}
+.doom-screen:fullscreen iframe{height:100vh;width:100vw;aspect-ratio:auto;object-fit:contain}
+@media(max-width:640px){.doom-wrap{padding:1.1rem .75rem 3rem}.doom-screen iframe{aspect-ratio:4/3}}
+@media(prefers-reduced-motion:reduce){.doom-screen::before{opacity:.4}}
 </style>
 </head>
 <body>
@@ -27,37 +34,58 @@
  <nav class="nav" aria-label="Site navigation">
  <a href="../index.html">Home</a><a href="../about.html">About</a><a href="../projects.html">Projects</a>
  <a href="../experience.html">Experience</a><a href="../education.html">Education</a>
- <a href="../publications.html">Publications</a><a href="../articles.html">Articles</a><a href="../contact.html">Contact</a>
+ <a href="../publications.html">Publications</a><a href="../articles.html">Articles</a>
+ <a href="../games.html"><b>Games</b></a><a href="../contact.html">Contact</a>
  </nav></div></header>
 <main class="doom-wrap">
- <div class="doom-title"><div><h2>DOOM // 1993</h2><p class="muted">RETRO ARCADE · FREEDOOM</p></div><a href="../index.html">&larr; Return to website</a></div>
- <section class="card" aria-label="Doom browser player">
-  <div class="doom-player"><iframe id="doom-game" src="engine/index.html" title="DOOM game" allow="autoplay; fullscreen" allowfullscreen tabindex="0"></iframe></div>
+ <div class="doom-title"><div><p class="muted">GAMES / RETRO ARCADE</p><h2>DOOM / FREEDOOM</h2></div><a href="../games.html">← Back to Games</a></div>
+ <section class="card doom-frame" aria-label="Freedoom browser game">
+  <div class="doom-screen" id="doom-screen">
+    <iframe id="doom-game" src="engine/index.html" title="Freedoom game" allow="autoplay; fullscreen" allowfullscreen tabindex="0"></iframe>
+  </div>
   <div class="doom-toolbar">
    <button type="button" id="doom-fullscreen">FULLSCREEN</button>
-   <button type="button" id="doom-restart">RESTART PLAYER</button>
-   <a href="engine/index.html" target="_blank" rel="noopener">OPEN PLAYER IN NEW TAB</a>
+   <button type="button" id="doom-restart">RESTART</button>
   </div>
-  <p id="doom-status" role="status" aria-live="polite">Click inside the game to focus keyboard controls.</p>
+  <p id="doom-status" role="status" aria-live="polite">Click inside the game, select TAP TO START, then use the keyboard.</p>
  </section>
  <section class="doom-help"><h3>Controls</h3>
- <p>Arrow keys: move / turn &nbsp;|&nbsp; Ctrl: fire &nbsp;|&nbsp; Space: open doors &nbsp;|&nbsp; Shift: run &nbsp;|&nbsp; Esc: menu</p>
- <p>Freedoom Phase 1 runs directly in your browser. Click inside the game and choose TAP TO START. Music is not part of this deployment.</p>
+ <p>Arrow keys: move / turn · Ctrl: fire · Space: open doors · Shift: run · Esc: menu</p>
+ <p>Freedoom Phase 1 runs in your browser. Audio and the original engine are preserved.</p>
  </section>
 </main>
+<footer class="footer">© 2026 Ben G. B. Kitchener</footer>
 <script>
 (function(){
-  'use strict';
-  const player=document.getElementById('doom-game');
-  const status=document.getElementById('doom-status');
-  document.getElementById('doom-fullscreen').addEventListener('click',async()=>{
-    try{await player.requestFullscreen();player.focus();}
-    catch(err){status.textContent='Fullscreen was blocked: '+err.message;}
-  });
-  document.getElementById('doom-restart').addEventListener('click',()=>{
-    player.src='engine/index.html';status.textContent='Player restarted; click inside it to focus.';
-  });
-  player.addEventListener('error',()=>{status.textContent='Player unavailable: check doom/engine installation.'});
+ 'use strict';
+ const frame=document.getElementById('doom-game');
+ const screen=document.getElementById('doom-screen');
+ const status=document.getElementById('doom-status');
+ // The game is hosted on the same GitHub Pages origin and directory.
+ // Remove only the virtual touch keypad, not the DOOM canvas or boot controls.
+ function hideTouchPad(){
+   try{
+     const doc=frame.contentDocument;
+     if(!doc)return;
+     let style=doc.getElementById('website-doom-no-touch-pad');
+     if(!style){
+       style=doc.createElement('style');
+       style.id='website-doom-no-touch-pad';
+       style.textContent='#pad{display:none !important;} #screen{flex:1 1 auto !important;min-height:0 !important;}';
+       doc.head.appendChild(style);
+     }
+     const pad=doc.getElementById('pad');
+     if(pad){pad.hidden=true;pad.style.setProperty('display','none','important');}
+   }catch(e){status.textContent='Game loaded; touchscreen controls could not be hidden automatically.';}
+ }
+ frame.addEventListener('load',hideTouchPad);
+ document.getElementById('doom-fullscreen').addEventListener('click',async()=>{
+   try{await screen.requestFullscreen();frame.focus();}
+   catch(e){status.textContent='Fullscreen unavailable: '+e.message;}
+ });
+ document.getElementById('doom-restart').addEventListener('click',()=>{
+   frame.src='engine/index.html';status.textContent='Game restarted. Select TAP TO START.';
+ });
 })();
 </script>
 </body>
