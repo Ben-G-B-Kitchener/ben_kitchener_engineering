@@ -1,0 +1,1 @@
+Copy CONTENTS of the engine folder from your working DOOM_OFFLINE_READY.zip here. Remove this marker before publishing.
