@@ -1,1 +1,14 @@
-:root{color-scheme:dark;--phosphor:#66ff96;--dim:#2c9960}*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:#030805;color:var(--phosphor);font-family:Consolas,'Courier New',monospace}body{display:grid;place-items:center;padding:18px}.cabinet{width:min(1100px,100%);border:1px solid #225b38;background:#020603;box-shadow:0 0 28px #0b512635,inset 0 0 26px #0b51262a;padding:12px}.topline,footer{display:flex;justify-content:space-between;gap:16px;align-items:center;letter-spacing:.13em;font-size:clamp(10px,1.1vw,14px)}.topline{padding:7px 4px 14px}.topline strong{font-size:clamp(15px,2vw,23px);text-shadow:0 0 12px #43ff8e}.topline span,footer{color:var(--dim)}.screen{position:relative;aspect-ratio:16/10;overflow:hidden;border:1px solid #1c5934;box-shadow:inset 0 0 65px #104f2d48,0 0 22px #0b4c2630;background:radial-gradient(ellipse at center,#061b0c 0,#010502 76%)}canvas{display:block;width:100%;height:100%}.scanlines{pointer-events:none;position:absolute;inset:0;background:repeating-linear-gradient(to bottom,transparent 0px,transparent 3px,#0008 4px);opacity:.38}footer{padding:13px 4px 3px;line-height:1.7;flex-wrap:wrap}@media(max-width:600px){body{padding:4px}.cabinet{padding:6px}.screen{aspect-ratio:4/5}.topline span{display:none}}
+/* Galactic Trader-specific styles, loaded after the shared portfolio CSS. */
+.gt-main { padding: 1.5rem 0 3rem; }
+.gt-intro { padding-bottom: 1.5rem; }
+.gt-intro h2 { margin-top: .35rem; }
+.cabinet { width: min(1100px, calc(100% - 3rem)); margin: 0 auto; border: 1px solid #225b38; background: #020603; box-shadow: 0 0 28px #0b512635, inset 0 0 26px #0b51262a; padding: 12px; }
+.cabinet .topline, .cabinet .gt-controls { display: flex; justify-content: space-between; gap: 16px; align-items: center; letter-spacing: .13em; font-size: clamp(10px,1.1vw,14px); }
+.cabinet .topline { padding: 7px 4px 14px; }
+.cabinet .topline strong { font-size: clamp(15px,2vw,23px); text-shadow: 0 0 12px #43ff8e; }
+.cabinet .topline span, .cabinet .gt-controls { color: #2c9960; }
+.cabinet .screen { position: relative; aspect-ratio: 16/10; overflow: hidden; border: 1px solid #1c5934; box-shadow: inset 0 0 65px #104f2d48, 0 0 22px #0b4c2630; background: radial-gradient(ellipse at center,#061b0c 0,#010502 76%); }
+.cabinet canvas { display: block; width: 100%; height: 100%; }
+.cabinet .scanlines { pointer-events: none; position: absolute; inset: 0; background: repeating-linear-gradient(to bottom, transparent 0px,transparent 3px,#0008 4px); opacity: .38; }
+.cabinet .gt-controls { padding: 13px 4px 3px; line-height: 1.7; flex-wrap: wrap; }
+@media (max-width:600px) { .cabinet { width: calc(100% - 1rem); padding: 6px; } .cabinet .screen { aspect-ratio: 4/5; } .cabinet .topline span { display: none; } }
